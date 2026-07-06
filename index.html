@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="style.css">
+<!-- ============================================================
+     PAGE METADATA — edit title / description here
+     ============================================================ -->
+<title>Natsupha_portfolio</title>
+<meta name="description" content="I build fast, thoughtful interfaces and the systems behind them. CS student looking for a hands-on engineering internship.">
+<meta name="theme-color" content="#07080c">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%234f8dff%22>▨</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================================================
+     LOADING SCREEN — shown briefly while the page assembles
+     ============================================================ -->
+<div id="loader" aria-hidden="true">
+  <div class="loader-mark">
+    <svg viewBox="0 0 64 64" width="56" height="56">
+      <polyline points="8,40 22,20 34,44 46,16 56,32" fill="none" stroke="url(#loaderGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" pathLength="1" id="loaderPath"/>
+      <defs>
+        <linearGradient id="loaderGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#4f8dff"/>
+          <stop offset="1" stop-color="#a56bff"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="loader-label">Welcome to My Portfolio...<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+</div>
+
+<!-- Custom cursor (desktop only, disabled automatically on touch devices) -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<!-- Ambient background decoration: fixed, non-interactive, purely visual -->
+<div class="bg-decor" aria-hidden="true">
+  <div class="bg-decor-grid"></div>
+  <div class="bg-decor-orb bg-decor-orb--1"></div>
+  <div class="bg-decor-orb bg-decor-orb--2"></div>
+  <div class="bg-decor-orb bg-decor-orb--3"></div>
+  <div class="bg-decor-noise"></div>
+</div>
+
+<div id="page">
+
+<!-- ============================================================
+     HEADER / NAVIGATION
+     ============================================================ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#hero" class="brand" data-cursor="link">
+      <span class="brand-mark">NY</span>
+      <span class="brand-name">Natsupha Yothakun</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#about" data-cursor="link">About me</a></li>
+        <li><a href="#education" data-cursor="link">Education</a></li>
+        <li><a href="#projects" data-cursor="link">Projects</a></li>
+        <li><a href="#activities" data-cursor="link">Activities</a></li>
+        <li><a href="#skills" data-cursor="link">Skills</a></li>
+        <li><a href="#certificates" data-cursor="link">Certificates</a></li>
+      </ul>
+    </nav>
+
+    <a href="#contact" class="btn btn-primary btn-small magnetic" data-cursor="link">
+      <span>Let's talk</span>
+    </a>
+
+    
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <ul>
+    <li><a href="#about">About me</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+<main id="main">
+  
+
+<!-- ============================================================
+     1. HERO — edit headline, tagline, and meta info here
+     ============================================================ -->
+<section class="hero" id="hero">
+  <canvas id="blobCanvas" class="blob-canvas" aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="hero-eyebrow reveal-up"><span class="pulse-dot"></span> AVAILABLE FOR INTERNSHIPS (2026)</p>
+
+      <h1 class="hero-title">
+      <span class="split-line"><span class="split-word" style="--i:0">Portfolio</span></span>  
+      <span class="split-line"><span class="split-word gradient-text" style="--i:3">Digital Business Information Systems Student</span> </h1>
+      
+     <h2> <span class="split-line"><span class="split-word" style="--i:7">Interested in UX/UI Design • Data Analysis • Business Analysis </span> <span class="split-word" style="--i:6"></span></span>
+      <span class="split-line"><span class="split-word" style="--i:7"></span> <span class="split-word" style="--i:8">  </span> <span class="split-word" style="--i:9"></span></span>
+    </h2>
+
+    <p class="hero-sub reveal-up" style="--d:0.1s">Looking for an internship opportunity to learn, grow, and contribute to real-world projects</p>
+
+    <div class="hero-actions reveal-up" style="--d:0.2s">
+      <a href="#projects" class="btn btn-primary magnetic" data-cursor="link"><span>View my work</span></a>
+    </div>
+
+    <div class="hero-meta reveal-up" style="--d:0.3s">
+      <span>Mahasarakham, Thailand Open to Learning & New Challenges</span>
+    </div>
+  </div>
+
+  <a href="#about" class="scroll-cue" data-cursor="link" aria-label="Scroll to About">
+    <span class="scroll-cue-line"></span>
+    <span>↓ Scroll to Explore</span>
+  </a>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ============================================================
+     2. ABOUT — edit headline, paragraphs, and stats here
+     ============================================================ -->
+<section class="section about" id="about">
+  <div class="section-inner about-grid">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">01 — About me</span>
+      <h2 class="section-title reveal-up">WHO AM I?</h2>
+    </div>
+
+    <div class="about-portrait reveal-up">
+      <div class="portrait-frame tilt-card">
+        <div class="portrait-glow"></div>
+        <!-- Replace this initials fallback with <img src="assets/images/portrait.jpg" alt="Arjun Mehta"> if you have a photo -->
+        <img
+            src="2.jpg"
+            alt="Natsupa Yothakul"
+            class="profile-image"
+        >
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <p class="about-headline reveal-up">สวัสดีค่ะ หนูชื่อ นางสาวณัฐสุภา โยธากุล 👋 </p>
+
+      <p class="reveal-up" style="--d:0.05s">จากการเรียนและการทำโปรเจกต์ในมหาวิทยาลัย 
+        หนูได้พัฒนาทักษะด้านการพัฒนาเว็บไซต์ การออกแบบ UX/UI 
+        และการวิเคราะห์ข้อมูล โดยใช้เครื่องมือหลักคือ HTML, CSS, PHP, Figma, Power BI และ RapidMiner 
+        เพื่อเปลี่ยนไอเดียให้กลายเป็นผลงานที่ใช้งานได้จริง</p>
+
+      <p class="reveal-up" style="--d:0.1s">พอร์ตโฟลิโอนี้เกิดขึ้นโดยมี AI 
+        เป็นผู้ช่วยในการคิดไอเดียและสร้างโค้ดเบื้องต้น แต่หนูได้ทำการทดสอบ 
+        แก้ไขข้อมูล และปรับปรุงโค้ด เพื่อให้เข้าใจการทำงานจริงของแต่ละฟีเจอร์
+         ถึงแม้จะไม่ได้เขียนทุกบรรทัดด้วยตัวเอง แต่หนูตั้งใจเรียนรู้จากทุกส่วน เพื่อนำไปอธิบาย 
+         พัฒนา และต่อยอดได้อย่างมั่นใจ</p>
+
+      <p class="reveal-up" style="--d:0.15s">ตอนนี้หนูกำลังมองหาโอกาสฝึกงาน 
+        เพื่อพัฒนาทักษะของตัวเองและเรียนรู้การทำงานจริงในสภาพแวดล้อมแบบมืออาชีพ 
+        โดยเฉพาะอยากเข้าใจว่าระบบการทำงานในองค์กรจริงเป็นอย่างไร 
+        การทำงานเป็นทีมเกิดขึ้นแบบไหน และการจัดการโปรเจกต์ในชีวิตการทำงานจริงมีขั้นตอนอย่างไร
+         หนูมีความตั้งใจอยากเรียนรู้ เติบโต และช่วยสนับสนุนทีมให้ได้มากที่สุดในช่วงฝึกงานค่ะ</p>
+
+      <!-- Stat cards: edit label/value pairs below -->
+  
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ============================================================
+     3. EDUCATION — copy/paste a <li class="timeline-item"> block
+     to add another entry
+     ============================================================ -->
+<section class="section education" id="education">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">02 — Education</span>
+      <h2 class="section-title reveal-up">Where my journey began</h2>
+    </div>
+
+   <ol class="timeline">
+  
+  <li class="timeline-item reveal-up" style="--d: 0.08s">
+    <div class="timeline-marker"></div>
+    <div class="timeline-card tilt-card">
+      
+      <span class="timeline-period">2022 — 2026 (Expected)</span>
+      
+      <h3>Mahasarakham University</h3>
+      
+      <p class="timeline-degree">Bachelor of Business Administration in Digital Business Information Systems</p>
+      <div class="highlight-card">
+            <span class="highlight-label"><strong>GPAX</strong></span>
+            <strong>3.53 / 4.00</strong>
+        </div>
+      <p class="timeline-detail">Focusing on modern digital commerce infrastructure, structural system analysis, and turning business operations into interactive data-driven insights.</p>
+
+      <div class="education-courses-wrap" style="margin-top: 14px;">
+        <span style="display: block; font-family: var(--font-mono); font-size: 13px; text-transform: uppercase; color: var(--slate-dim); letter-spacing: 0.05em; margin-bottom: 8px;">Relevant courses:</span>
+        <ul class="course-badge-list" style="display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none;">
+          <li class="course-badge">Data Analytics for Digital Business</li>
+          <li class="course-badge">Web Development for Digital Business</li>
+          <li class="course-badge">UX/UI Design and Development</li>
+          <li class="course-badge">Business Intelligence</li>
+          <li class="course-badge">Information Systems Analysis</li>
+        </ul>
+      </div>
+    
+
+    </div>
+  </li>
+
+  </ol>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ============================================================
+     4. PROJECTS
+     Each project is a <article class="project-card"> for the grid,
+     PLUS a matching <template id="project-N"> holding the full
+     case-study content shown in the modal when the card is clicked.
+     To add a project: copy both blocks and bump the id/data-project
+     numbers.
+     ============================================================ -->
+ <section class="section projects" id="projects">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">03 — Projects</span>
+      <h2 class="section-title reveal-up">Projects I've Worked On</h2>
+      <p class="section-sub reveal-up">Each project has been a valuable opportunity to learn, collaborate with others, and develop practical skills through hands-on experience.</p>
+    </div>
+
+    <!--  project 1 -->
+<div class="project-grid">
+
+  <!-- Project Card : Gold Price Forecasting Model -->
+
+    <article class="project-card tilt-card reveal-up"
+        style="--d:0.6s"
+        data-project="1"
+        tabindex="0"
+        role="button"
+        aria-haspopup="dialog"
+        aria-label="Open case study: Gold Price Forecasting Model">
+
+        <div class="project-media">
+            <img src="assets/การพยากรณ์การเติบโตของของราคาทองคำ.png"
+                 alt="grab"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+
+            <span class="project-year">2025</span>
+        </div>
+
+    <!-- ข้อมูลสั้น ๆ บนการ์ด -->
+    <div class="project-body">
+      <h3>Gold Price Forecasting Model</h3>
+      <p>
+        A class project exploring historical gold price trends through
+        data preparation, regression analysis, and visualization to support business insights.
+      </p>
+
+      <!-- Tag แสดงทักษะหรือเครื่องมือที่ใช้ -->
+      <ul class="tag-list">
+        <li>Data Analytics</li>
+        <li>Regression Analysis</li>
+        <li>RapidMiner</li>
+      </ul>
+    </div>
+
+    <!-- ปุ่มสำหรับเปิดรายละเอียด -->
+<div class="project-card-actions">
+    <a class="project-card-cta"
+       href="assets/docs/รายงาน DA พยากรณ์หุ้นทองคำในไทย.pdf"
+       target="_blank">
+        <span>📄 Report</span> ↗
+    </a>
+
+    <a class="project-card-cta"
+       href="https://canva.link/ro3vvwbvr8sgp1f"
+       target="_blank">
+        <span>🖥️ Presentation</span> ↗
+    </a>
+</article>
+     
+  
+
+    <!-- Project 2 -->
+    <article class="project-card tilt-card reveal-up"
+        style="--d:0.12s"
+        data-project="2"
+        tabindex="0"
+        role="button"
+        aria-haspopup="dialog"
+        aria-label="Open case study: Gold Price Forecasting Model">
+
+        <div class="project-media">
+            <img src="assets/grab.png"
+                 alt="grab"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+
+            <span class="project-year">2024</span>
+        </div>
+
+        <div class="project-body">
+            <h3>Food Delivery App UX/UI Redesign</h3>
+
+            <p>
+                A UX/UI redesign project focused on improving the food ordering experience by addressing payment, ordering flow, and rider communication.
+
+            </p>
+
+            <ul class="tag-list">
+             
+                <li> UX/UI Design</li>
+                <li>Figma</li>
+                <li>User Researchr</li>
+            </ul>
+        </div>
+
+        <div class="project-card-actions">
+
+            <a class="project-card-cta"
+               href="assets/docs/รายงาน grap.pdf"
+               target="_blank">
+                📄 Report ↗
+            </a>
+
+            <a class="project-card-cta"
+               href="https://canva.link/pgmckqcxam47wex"
+               target="_blank">
+                🖥️ Presentation ↗
+            </a>
+
+        </div>
+
+    </article>
+
+
+     <!-- Project 3 -->
+    <article class="project-card tilt-card reveal-up"
+        style="--d:0.18s"
+        data-project="3"
+        tabindex="0"
+        role="button"
+        aria-haspopup="dialog"
+        aria-label="Open case study: Gold Price Forecasting Model">
+
+        <div class="project-media">
+            <img src="assets/explore.jpg"
+                 alt="grab"
+                 style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+
+            <span class="project-year">2025</span>
+        </div>
+
+        <div class="project-body">
+            <h3>Educational Dinosaur Game</h3>
+
+            <p>
+               An educational game developed in Roblox Studio that combines interactive exploration with quizzes to create an engaging learning experience.
+
+            </p>
+
+            <ul class="tag-list">
+            
+
+                <li>  Roblox Studio</li>
+                <li>Game Design</li>
+                <li>Augmented Reality (AR) 
+                  Applications and Metaverse for Digital Business</li>
+            </ul>
+        </div>
+
+        <div class="project-card-actions">
+
+            <a class="project-card-cta"
+               href="assets/docs/EBOOK.pdf"
+               target="_blank">
+                🖥️ Presentation ↗
+            </a>
+
+        </div>
+
+    </article>
+
+
+</div>
+
+
+  <!-- Project modal shell — JS clones the matching <template> below into #projectModalContent -->
+  <div class="project-modal" id="projectModal" aria-hidden="true">
+    <div class="project-modal-backdrop" data-close-modal></div>
+    <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="project-modal-close" data-close-modal aria-label="Close case study">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="project-modal-content" id="projectModalContent"></div>
+    </div>
+  </div>
+
+  <!-- ============ Case-study content templates — edit freely ============ -->
+  <template id="project-1">
+    <div class="modal-hero project-media-fallback" style="--hue:210; border-radius:18px;"></div>
+    <span class="section-eyebrow">Solo project · 2025</span>
+    <h2 id="modalTitle" class="section-title" style="margin-top:10px;">Ledgerline</h2>
+    <p class="modal-tagline">A real-time collaborative spreadsheet engine built on CRDTs.</p>
+    <ul class="tag-list" style="margin-bottom:24px;">
+      <li>TypeScript</li><li>WebSockets</li><li>CRDT</li><li>Node.js</li>
+    </ul>
+    <p class="modal-desc">Ledgerline is a from-scratch spreadsheet core that lets multiple people edit the same sheet with zero merge conflicts. I implemented a custom Conflict-free Replicated Data Type for cell state, a dependency graph for formula recalculation, and a WebSocket sync layer that keeps 40+ concurrent editors under 80ms of drift.</p>
+    <ul class="modal-highlights">
+      <li>Formula recalculation graph handles 10,000+ cell dependencies without a visible stall</li>
+      <li>Custom binary sync protocol cut payload size by 63% versus JSON diffs</li>
+      <li>Presence cursors and cell-level locking for a genuinely multiplayer feel</li>
+    </ul>
+    <div class="modal-actions">
+      <a class="btn btn-primary magnetic" href="https://example.com/ledgerline" target="_blank" rel="noopener"><span>View live</span></a>
+      <a class="btn btn-ghost magnetic" href="https://github.com/example/ledgerline" target="_blank" rel="noopener"><span>View source</span></a>
+    </div>
+  </template>
+
+  <template id="project-2">
+    <div class="modal-hero project-media-fallback" style="--hue:238; border-radius:18px;"></div>
+    <span class="section-eyebrow">Team lead, 3 engineers · 2024</span>
+    <h2 id="modalTitle" class="section-title" style="margin-top:10px;">Waypoint</h2>
+    <p class="modal-tagline">An offline-first route planner for cyclists, built as a PWA.</p>
+    <ul class="tag-list" style="margin-bottom:24px;">
+      <li>JavaScript</li><li>Service Workers</li><li>IndexedDB</li><li>Leaflet</li>
+    </ul>
+    <p class="modal-desc">Waypoint caches elevation and road-surface data locally so riders can plan and follow routes with zero signal. I wrote the tile caching layer, an on-device routing algorithm (a modified A*), and a service worker strategy tuned for spotty connectivity.</p>
+    <ul class="modal-highlights">
+      <li>Full route planning works with the network disabled</li>
+      <li>Custom A* variant weighted for elevation gain and surface quality</li>
+      <li>4.7/5 average rating across 200+ beta testers</li>
+    </ul>
+    <div class="modal-actions">
+      <a class="btn btn-primary magnetic" href="https://example.com/waypoint" target="_blank" rel="noopener"><span>View live</span></a>
+      <a class="btn btn-ghost magnetic" href="https://github.com/example/waypoint" target="_blank" rel="noopener"><span>View source</span></a>
+    </div>
+  </template>
+
+  <template id="project-3">
+    <div class="modal-hero project-media-fallback" style="--hue:266; border-radius:18px;"></div>
+    <span class="section-eyebrow">Front-end engineer · 2024</span>
+    <h2 id="modalTitle" class="section-title" style="margin-top:10px;">Signal Desk</h2>
+    <p class="modal-tagline">A support-ticket triage dashboard with ML-assisted prioritization.</p>
+    <ul class="tag-list" style="margin-bottom:24px;">
+      <li>Vanilla JS</li><li>PHP</li><li>MySQL</li><li>Python (scikit-learn)</li>
+    </ul>
+    <p class="modal-desc">Built for a campus startup, Signal Desk ranks incoming support tickets by urgency and sentiment using a lightweight classifier, then routes them through a Kanban-style queue. The front end is a hand-rolled reactive layer without a framework, built to stay under 40KB gzipped.</p>
+    <ul class="modal-highlights">
+      <li>Reduced average ticket response time by 41% in a 6-week pilot</li>
+      <li>Reactive UI layer written without any framework, under 40KB gzipped</li>
+      <li>Classifier retrains nightly on a rolling 90-day ticket window</li>
+    </ul>
+    <div class="modal-actions">
+      <a class="btn btn-primary magnetic" href="https://example.com/signal-desk" target="_blank" rel="noopener"><span>View live</span></a>
+      <a class="btn btn-ghost magnetic" href="https://github.com/example/signal-desk" target="_blank" rel="noopener"><span>View source</span></a>
+    </div>
+  </template>
+
+  <template id="project-4">
+    <div class="modal-hero project-media-fallback" style="--hue:294; border-radius:18px;"></div>
+    <span class="section-eyebrow">Solo project · 2023</span>
+    <h2 id="modalTitle" class="section-title" style="margin-top:10px;">Kiln</h2>
+    <p class="modal-tagline">A CLI that turns a folder of markdown notes into a static wiki.</p>
+    <ul class="tag-list" style="margin-bottom:24px;">
+      <li>Rust</li><li>CLI</li><li>Markdown</li>
+    </ul>
+    <p class="modal-desc">Kiln is a small, fast static-site generator purpose-built for personal knowledge bases. It resolves backlinks, builds a graph view, and rebuilds incrementally so a 2,000-note vault regenerates in under a second.</p>
+    <ul class="modal-highlights">
+      <li>Incremental rebuilds: 2,000 notes regenerate in under 1 second</li>
+      <li>Automatic backlink graph rendered as an interactive SVG</li>
+      <li>230+ GitHub stars, adopted by a handful of local study groups</li>
+    </ul>
+    <div class="modal-actions">
+      <a class="btn btn-ghost magnetic" href="https://github.com/example/kiln" target="_blank" rel="noopener"><span>View source</span></a>
+    </div>
+  </template>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<!-- ============================================================
+     5. ACTIVITIES — copy a <div class="activity-row"> to add one
+     ============================================================ -->
+<section class="section activities" id="activities">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">04 — Activities</span>
+      <h2 class="section-title reveal-up">Beyond the Classroom</h2>
+    </div>
+
+   <div class="activity-neon-grid">
+
+  <article class="activity-neon-card reveal-up" style="--d: 0.05s" data-project="act-1" tabindex="0" role="button">
+    <div class="activity-neon-header">
+      <h3>Staff Lead – กีฬาสีคณะ <span class="act-year">2025</span></h3>
+    </div>
+    <div class="activity-neon-media">
+      <img src="assets/img/staff.JPG" alt="Staff Lead – กีฬาสีคณะ">
+    </div>
+    <div class="activity-neon-body">
+      <p>รับผิดชอบประสานงานและดูแลการดำเนินกิจกรรมร่วมกับทีมสตาฟ และสนับสนุนให้กิจกรรมดำเนินไปอย่างราบรื่น</p>
+    </div>
+    <template class="project-detail-template">
+      <div class="modal-hero" style="background: url('assets/img/staff.JPG') center/cover; aspect-ratio: 16/10; border-radius: var(--radius-md); margin-bottom: 20px;"></div>
+      <h2 id="modalTitle" class="section-title">Staff Lead – กีฬาสีคณะ</h2>
+      <div class="modal-desc" style="margin-top: 14px;">
+        <p style="color: var(--slate); font-size: 1rem; line-height: 1.6;">รับผิดชอบประสานงานและดูแลการดำเนินกิจกรรมร่วมกับทีมสตาฟ และสนับสนุนให้กิจกรรมดำเนินไปอย่างราบรื่น</p>
+      </div>
+    </template>
+  </article>
+
+  <article class="activity-neon-card reveal-up" style="--d: 0.1s" data-project="act-2" tabindex="0" role="button">
+    <div class="activity-neon-header">
+      <h3>Thailand's Future: Cybersecurity & AI <span class="act-year">2025</span></h3>
+    </div>
+    <div class="activity-neon-media">
+      <img src="assets/img/tech.jpeg" alt="Cybersecurity & AI Seminar">
+    </div>
+    <div class="activity-neon-body">
+      <p>เข้าร่วมสัมมนาเกี่ยวกับ Cybersecurity และ AI เพื่อเรียนรู้แนวโน้มเทคโนโลยีและการประยุกต์ใช้ในภาคธุรกิจ รวมถึงแลกเปลี่ยนความรู้จากผู้บรรยาย</p>
+    </div>
+    <template class="project-detail-template">
+      <div class="modal-hero" style="background: url('assets/img/tech.jpeg') center/cover; aspect-ratio: 16/10; border-radius: var(--radius-md); margin-bottom: 20px;"></div>
+      <h2 id="modalTitle" class="section-title">Cybersecurity & AI Seminar</h2>
+      <div class="modal-desc" style="margin-top: 14px;">
+        <p style="color: var(--slate); font-size: 1rem; line-height: 1.6;">เข้าร่วมสัมมนาเกี่ยวกับ Cybersecurity และ AI เพื่อเรียนรู้แนวโน้มเทคโนโลยีและการประยุกต์ใช้ในภาคธุรกิจ รวมถึงแลกเปลี่ยนความรู้จากผู้บรรยาย</p>
+      </div>
+    </template>
+  </article>
+
+  <article class="activity-neon-card reveal-up" style="--d: 0.15s" data-project="act-3" tabindex="0" role="button">
+    <div class="activity-neon-header">
+      <h3>Computer Network and Security <span class="act-year">2024</span></h3>
+    </div>
+    <div class="activity-neon-media">
+      <img src="assets/img/7.jpeg" alt="Computer Network and Security Case Study">
+    </div>
+    <div class="activity-neon-body">
+      <p>ลงพื้นที่สัมภาษณ์ร้าน Seven Net จังหวัดมหาสารคาม เพื่อศึกษาการติดตั้งและการจัดการระบบเครือข่ายอินเทอร์เน็ต นำข้อมูลมาวิเคราะห์และจัดทำรายงานประกอบรายวิชา</p>
+    </div>
+    <template class="project-detail-template">
+      <div class="modal-hero" style="background: url('assets/img/7.jpeg') center/cover; aspect-ratio: 16/10; border-radius: var(--radius-md); margin-bottom: 20px;"></div>
+      <h2 id="modalTitle" class="section-title">Computer Network & Security Case Study</h2>
+      <div class="modal-desc" style="margin-top: 14px;">
+        <p style="color: var(--slate); font-size: 1rem; line-height: 1.6;">ลงพื้นที่สัมภาษณ์ร้าน Seven Net จังหวัดมหาสารคาม เพื่อศึกษาการติดตั้งและการจัดการระบบเครือข่ายอินเทอร์เน็ต นำข้อมูลมาวิเคราะห์และจัดทำรายงานประกอบรายวิชา</p>
+      </div>
+    </template>
+  </article>
+
+  <article class="activity-neon-card reveal-up" style="--d: 0.2s" data-project="act-4" tabindex="0" role="button">
+    <div class="activity-neon-header">
+      <h3>สหกรณ์ผู้เลี้ยงโคนม มหาสารคาม จำกัด <span class="act-year">2025</span></h3>
+    </div>
+    <div class="activity-neon-media">
+      <img src="assets/img/Production.jpg" alt="สหกรณ์ผู้เลี้ยงโคนม มหาสารคาม จำกัด">
+    </div>
+    <div class="activity-neon-body">
+      <p>ลงพื้นที่ศึกษากระบวนการผลิตของสหกรณ์ผู้เลี้ยงโคนม มหาสารคาม จำกัด สัมภาษณ์ข้อมูลเกี่ยวกับขั้นตอนการผลิตและการดำเนินงาน เพื่อนำข้อมูลมาวิเคราะห์และจัดทำรายงาน</p>
+    </div>
+    <template class="project-detail-template">
+      <div class="modal-hero" style="background: url('assets/img/Production.jpg') center/cover; aspect-ratio: 16/10; border-radius: var(--radius-md); margin-bottom: 20px;"></div>
+      <h2 id="modalTitle" class="section-title">กระบวนการผลิต สหกรณ์ผู้เลี้ยงโคนม มหาสารคาม จำกัด</h2>
+      <div class="modal-desc" style="margin-top: 14px;">
+        <p style="color: var(--slate); font-size: 1rem; line-height: 1.6;">ลงพื้นที่ศึกษากระบวนการผลิตของสหกรณ์ผู้เลี้ยงโคนม มหาสารคาม จำกัด สัมภาษณ์ข้อมูลเกี่ยวกับขั้นตอนการผลิตและการดำเนินงาน เพื่อนำข้อมูลมาวิเคราะห์และจัดทำรายงาน</p>
+      </div>
+    </template>
+  </article>
+
+  <article class="activity-neon-card reveal-up" style="--d: 0.25s" data-project="act-5" tabindex="0" role="button">
+    <div class="activity-neon-header">
+      <h3>Programming in Digital Business <span class="act-year">2022</span></h3>
+    </div>
+    <div class="activity-neon-media">
+      <img src="assets/img/python.jpeg" alt="Principle of Programming in Digital Business">
+    </div>
+    <div class="activity-neon-body">
+      <p>ร่วมกับเพื่อนพัฒนาและนำเสนอผลงานในรายวิชาการเขียนโปรแกรม โดยทดลองสร้างโปรแกรมตามโจทย์ของรายวิชาและนำเสนอแนวคิดหน้าชั้นเรียน</p>
+    </div>
+    <template class="project-detail-template">
+      <div class="modal-hero" style="background: url('assets/img/python.jpeg') center/cover; aspect-ratio: 16/10; border-radius: var(--radius-md); margin-bottom: 20px;"></div>
+      <h2 id="modalTitle" class="section-title">Principle of Programming Project</h2>
+      <div class="modal-desc" style="margin-top: 14px;">
+        <p style="color: var(--slate); font-size: 1rem; line-height: 1.6;">ร่วมกับเพื่อนพัฒนาและนำเสนอผลงานในรายวิชาการเขียนโปรแกรม โดยทดลองสร้างโปรแกรมตามโจทย์ของรายวิชาและนำเสนอแนวคิดหน้าชั้นเรียน</p>
+      </div>
+    </template>
+  </article>
+
+</div>
+
+
+
+
+</div>
+
+<!-- ============================================================
+     6. SKILLS — interactive constellation instead of progress bars.
+     This list is hidden from view; JS reads it to draw the canvas.
+     To edit: change name / data-category / data-level (0-100) below.
+     Category colors are defined in assets/js/main.js (CATEGORY_COLORS).
+     ============================================================ -->
+<section class="section skills" id="skills">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">05 — Skills</span>
+      <h2 class="section-title reveal-up">Tools & Technologies</h2>
+      <p class="section-sub reveal-up">
+The tools and technologies I've learned through coursework, academic projects, and continuous self-learning.</p>
+    </div>
+
+    <!-- บล็อกแสดงกลุ่มคำหมุน 3D -->
+    <div class="sphere-cloud-wrap reveal-up">
+      <canvas id="skillsCanvas" width="500" height="500">
+        <!-- ลิสต์ข้อมูลความจริง (สัดส่วนขนาดตัวอักษรจะคำนวณตามระดับความถนัดจริง) -->
+        <ul id="sphereTags">
+          <!-- 🌟 ระดับถนัดมากที่สุด (คำขยายใหญ่สุด สว่างสุด) -->
+          <li><a href="#skills" style="font-size: 2.4rem; color: #00b7ff; font-weight: 700;">Power BI</a></li>
+          <li><a href="#skills" style="font-size: 2.2rem; color: #00b7ff; font-weight: 700;">UX/UI Design</a></li>
+          <li><a href="#skills" style="font-size: 2.2rem; color: #00b7ff; font-weight: 700;">Canva</a></li>
+          
+          <!-- 💡 ระดับถนัดปานกลาง (คำขนาดกลาง สว่างปกติ) -->
+          <li><a href="#skills" style="font-size: 1.7rem; color: #0077ff;">MS Excel</a></li>
+          <li><a href="#skills" style="font-size: 1.6rem; color: #0077ff;">Generative AI</a></li>
+          <li><a href="#skills" style="font-size: 1.6rem; color: #0077ff;">SQL</a></li>
+          <li><a href="#skills" style="font-size: 1.5rem; color: #0077ff;">Figma</a></li>
+          <li><a href="#skills" style="font-size: 1.4rem; color: #0077ff;">MS PowerPoint</a></li>
+          <li><a href="#skills" style="font-size: 1.4rem; color: #0077ff;">MS Word</a></li>
+          
+          <!-- 📉 ระดับถนัดน้อยที่สุด / พื้นฐาน (คำตัวเล็ก จาง มืดลึกในมิติ) -->
+          <li><a href="#skills" style="font-size: 1.0rem; color: rgba(0, 85, 255, 0.55);">Python</a></li>
+          <li><a href="#skills" style="font-size: 1.0rem; color: rgba(0, 85, 255, 0.55);">PHP</a></li>
+          <li><a href="#skills" style="font-size: 0.9rem; color: rgba(0, 85, 255, 0.55);">n8n</a></li>
+          <li><a href="#skills" style="font-size: 0.9rem; color: rgba(0, 85, 255, 0.55);">SPSS</a></li>
+          <li><a href="#skills" style="font-size: 0.8rem; color: rgba(0, 85, 255, 0.55);">RapidMiner</a></li>
+          <li><a href="#skills" style="font-size: 0.8rem; color: rgba(0, 85, 255, 0.55);">Roblox Studio</a></li>
+        </ul>
+      </canvas>
+    </div>
+
+  </div>
+</section>
+
+<!-- 🔗 สคริปต์โหลดไลบรารี TagCanvas ขับเคลื่อนทรงกลม 3D (วางไว้ก่อนแท็กปิด </body>) -->
+<script src="https://www.goat1000.com/tagcanvas.min.js" type="text/javascript"></script>
+<!-- ============================================================
+     7. CERTIFICATES — copy an <a class="cert-card"> to add one
+     ============================================================ -->
+<section class="section certificates" id="certificates">
+  <div class="section-inner">
+    <div class="section-heading">
+      <span class="section-eyebrow reveal-up">06 — Certificates</span>
+      <h2 class="section-title reveal-up">Learning Beyond the Classroom</h2>
+      <p class="section-sub reveal-up">Courses and professional training that support my academic learning and practical skills.</p>
+    </div>
+
+  
+
+ <div class="cert-carousel-container reveal-up">
+    <div class="cert-carousel-track">
+
+      <div class="cert-glass-slide" data-project="cert-1" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/Certificate-MS02-TH.pdf" alt="Microsoft Power BI Training">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">Data Visualization</span>
+          <h3>Microsoft Power BI Training</h3>
+          <p>Data Visualization & Business Intelligence<br>Microsoft Power BI (3 Hours)<br>Professional Qualification Institute &bull; 2025</p>
+          <a href="assets/img/Certificate-MS02-TH.pdf" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/Certificate-MS02-TH.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">Microsoft Power BI Training</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">Professional Qualification Institute (Public Organization) &bull; 2025</p></div>
+        </template>
+      </div>
+
+      <div class="cert-glass-slide" data-project="cert-2" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/Certificate-kumooc046-TH.pdf" alt="Generative AI & ChatGPT for Research">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">Research & AI</span>
+          <h3>Generative AI & ChatGPT for Research</h3>
+          <p>KUMOOC &bull; 2025</p>
+          <a href="assets/img/Certificate-kumooc046-TH.pdf" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/Certificate-kumooc046-TH.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">Generative AI & ChatGPT for Research</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">KUMOOC Certification &bull; 2025</p></div>
+        </template>
+      </div>
+
+      <div class="cert-glass-slide" data-project="cert-3" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/IntrotoDataScience.pdf" alt="Introduction to Data Science">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">Data Analytics Fundamentals</span>
+          <h3>Introduction to Data Science</h3>
+          <p>Cisco Networking Academy &bull; 2023</p>
+          <a href="assets/img/IntrotoDataScience.pdf" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/IntrotoDataScience.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">Introduction to Data Science</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">Cisco Networking Academy Credentials</p></div>
+        </template>
+      </div>
+
+      <div class="cert-glass-slide" data-project="cert-4" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/66010916068.pdf" alt="Mobile-Friendly Website Development">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">Web Design & Development</span>
+          <h3>Mobile-Friendly Website Development</h3>
+          <p>Thai MOOC &bull; RMUTI &bull; 2025</p>
+          <a href="assets/img/66010916068.pdf" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/66010916068.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">Mobile-Friendly Website Development</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">Thai MOOC &bull; Rajamangala University of Technology Isan</p></div>
+        </template>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-inner" style="margin-top: 60px;">
+    <div class="section-heading">
+      <h2 class="section-title reveal-up">Academic Qualifications</h2>
+      <p class="section-sub reveal-up">University exit assessments demonstrating English and digital competency.</p>
+    </div>
+  </div>
+
+  <div class="cert-carousel-container reveal-up">
+    <div class="cert-carousel-track">
+
+      <div class="cert-glass-slide" data-project="cert-5" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/certificate.png" alt="English Exit Examination MSU">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">English Exit Exam MSU</span>
+          <h3>English Exit Examination</h3>
+          <p>CEFR B2 (Overall Score: 67)<br>Mahasarakham University &bull; February 2026</p>
+          <a href="assets/img/certificate.png" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/certificate.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">English Exit Examination (MSU)</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">Mahasarakham University Exit Assessment Competency</p></div>
+        </template>
+      </div>
+
+      <div class="cert-glass-slide" data-project="cert-6" tabindex="0" role="button">
+        <div class="cert-image-frame">
+          <img src="assets/img/Digital_Literacy_Exit_Exam-42142-66010916068.pdf" alt="Digital Literacy Exit Examination MSU">
+        </div>
+        <div class="cert-glass-info">
+          <span class="cert-badge">Digital Literacy Exam MSU</span>
+          <h3>Digital Literacy Exit Examination</h3>
+          <p>Score: 56.67 (Moderate)<br>Mahasarakham University &bull; July 2026</p>
+          <a href="assets/img/Digital_Literacy_Exit_Exam-42142-66010916068.pdf" target="_blank" rel="noopener" class="cert-link-btn">Verify Credential ↗</a>
+        </div>
+        <template class="project-detail-template">
+          <div class="modal-hero" style="background: url('assets/img/Digital_Literacy_Exit_Exam.png') center/contain no-repeat; aspect-ratio: 4/3; border-radius: var(--radius-md); margin-bottom: 20px; background-color: rgba(0,0,0,0.02);"></div>
+          <h2 id="modalTitle" class="section-title">Digital Literacy Exit Examination (MSU)</h2>
+          <div class="modal-desc" style="text-align: center;"><p style="color: var(--slate);">Mahasarakham University Exit Assessment Competency</p></div>
+        </template>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+<!-- ============================================================
+     8. CONTACT
+     Static-site note: there is no backend here, so the form opens
+     the visitor's email client with the fields pre-filled (via a
+     mailto: link built in assets/js/main.js). Change YOUR_EMAIL
+     there and below to your real address. If you'd rather receive
+     submissions directly, swap the form's behaviour for a service
+     like Formspree or EmailJS — both work from a static page.
+     ============================================================ -->
+<section class="section contact" id="contact">
+  <div class="section-inner contact-grid">
+    <div class="contact-copy">
+      <span class="section-eyebrow reveal-up">07 — Contact</span>
+      <h2 class="section-title reveal-up">ยินดีที่ได้รู้จักค่ะ</h2>
+      <p class="section-sub reveal-up">ขอบคุณที่เข้ามาเยี่ยมชมพอร์ตโฟลิโอของหนู หากสนใจพูดคุยเกี่ยวกับผลงาน หรือมีโอกาสฝึกงานที่เหมาะสม สามารถติดต่อมาได้เลยนะคะ หนูพร้อมเรียนรู้ เปิดรับประสบการณ์ใหม่ และยินดีแลกเปลี่ยนความคิดเห็นเสมอค่ะ</p>
+
+      <ul class="contact-details reveal-up">
+     <li><strong>Email</strong><a href="mailto:natsupha.yo@gmail.com">natsupha.yo@email.com</a></li>
+       <li><strong>Tel.</strong><span>0659106769</span></li>
+        <li><strong>Location</strong><span>มหาสารคาม ประเทศไทย</span></li>
+        <li><strong>Satus</strong><span>Looking for Internship Opportunities</span></li>
+      </ul>
+    </div>
+
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark">NY</span>
+      <p>I build fast, thoughtful interfaces and the systems behind them.</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-col">
+        <h3>Site</h3>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h3>Elsewhere</h3>
+        <a href="https://github.com/example" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/example" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="assets/resume.pdf" target="_blank" rel="noopener">Résumé</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> natsupha yothakun</span>
+  </div>
+</footer>
+
+</div><!-- #page -->
+
+<script src="main.js" defer></script>
+
+
+
+</body>
+</html>
