@@ -352,6 +352,135 @@ body.is-loading{ overflow:hidden; }
   .cert-image-frame{ width:100%; aspect-ratio:4/3; border-right:none; border-bottom:1px solid var(--line); }
   .cert-info{ width:100%; padding:20px; }
 }
+
+/* =========================================================================
+   TECH STACK LOGO SYSTEM (LIGHT PAPER & INK EDITION)
+   ========================================================================= */
+body {
+  background: #F2F0F8; /* --paper: พื้นหลังสีขาวนวลสบายตา */
+  color: #1D1B2E;      /* --ink: สีตัวอักษรเข้ม */
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.section { position: relative; padding: 100px 0; overflow: hidden; }
+.section-inner { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.section-heading { max-width: 680px; margin-bottom: 48px; }
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 9px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #5B4FE3; /* --violet */ margin-bottom: 16px;
+}
+.section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; margin: 0; letter-spacing: -0.03em; color: #1D1B2E; }
+.section-sub { margin-top: 16px; color: #55516E; /* --ink-soft */ font-size: 1.06rem; line-height: 1.65; }
+
+.tech-stack-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 60px;
+  position: relative;
+  width: 100%;
+}
+
+.tech-stack-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.tech-stack-row.row-1 { max-width: 550px; }
+.tech-stack-row.row-2 { max-width: 420px; }
+.tech-stack-row.row-3 { max-width: 550px; }
+
+/* การ์ดไอคอนตอนปกติ: คลีน สะอาดตา ล้อไปกับสีแบคกราวด์งาน */
+.tech-item {
+  position: relative;
+  flex: 1;
+  min-width: 90px;
+  max-width: 110px;
+  aspect-ratio: 1 / 1;
+  background: #FBFAFC; /* --paper-2: เนื้อการ์ดสีขาวสว่าง */
+  border: 1px solid rgba(29, 27, 46, 0.10); /* --line: เส้นขอบจางๆ */
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(29, 27, 46, 0.03); /* เงาจางๆ บางเบา */
+}
+
+/* รูปโลโก้ตอนปกติ: ซ่อนสีจริง ทำเป็นสีขาวดำจมลงไปกับตัวการ์ด */
+.tech-item img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.5); /* ดึงสีออกจนหมดและโปร่งแสง */
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* ชื่อเครื่องมือตอนปกติ */
+.tech-item span {
+  font-size: 11px;
+  color: #8783A0; /* --ink-dim: สีเทาจาง */
+  font-weight: 500;
+  transition: color 0.3s;
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================================
+   INTERACTIVE HOVER (เมื่อชี้เมาส์ สีสันและออร่าถึงจะทำงาน)
+   ========================================================================= */
+.tech-item:hover {
+  border-color: #5B4FE3; /* --violet: เส้นขอบสว่างขึ้นเมื่อชี้ */
+  transform: translateY(-6px) scale(1.05);
+  background: #FBFAFC;
+  box-shadow: 
+    0 12px 24px -8px rgba(91, 79, 227, 0.25), /* สาดแสงออร่าสีม่วงจางๆ นุ่มๆ */
+    0 0 0 1px rgba(91, 79, 227, 0.15);
+}
+
+/* เมื่อชี้เมาส์: ปลุกสีสันจริงของไอคอนสแต็คคืนมา 100% */
+.tech-item:hover img {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.05);
+}
+
+/* เมื่อชี้เมาส์: ปรับตัวหนังสือให้เข้มขึ้นชัดเจน */
+.tech-item:hover span {
+  color: #1D1B2E; /* --ink */
+}
+
+/* สำหรับตัวที่มีลูกเล่นเปิดค้าง (เช่น TensorFlow) ปรับเป็นเฉดสีโกลด์ซอฟต์หรูหราเข้ากับธีม */
+.tech-item.active-glow {
+  border-color: #B8874A; /* --gold */
+  background: #FBFAFC;
+  box-shadow: 0 10px 20px -6px rgba(184, 135, 74, 0.2);
+}
+.tech-item.active-glow img { filter: grayscale(0%) opacity(1); }
+.tech-item.active-glow span { color: #1D1B2E; }
+
+/* ออร่าแสงสีม่วงเฉดลึกเบลอซ่อนไว้ใต้กลุ่มแผงสแต็ค เพิ่มมิติความพรีเมียม */
+.tech-stack-container::before {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(91, 79, 227, 0.06) 0%, transparent 75%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(40px);
+}
+/* พิมเอง*/
+
+
 </style>
 </head>
 <body>
@@ -404,9 +533,10 @@ body.is-loading{ overflow:hidden; }
     </nav>
 
     <a href="#contact" class="btn btn-primary btn-small magnetic" data-cursor="talk">
-      <span>Let's talk</span>
+      <span>Get in touch</span>
     </a>
-
+ 
+    
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -442,13 +572,15 @@ body.is-loading{ overflow:hidden; }
         <span class="split-line"><span class="split-word gradient-text" style="--i:2">Information Systems</span> <span class="split-word gradient-text" style="--i:3"><em>student</em></span></span>
       </h1>
 
-      <p class="hero-tagline reveal-up" style="--d:0.08s">UX/UI Design · Data Analysis · Business Analysis</p>
+<p class="hero-tagline reveal-up" style="--d:0.08s">
+        Focusing on <span id="typed-text" class="typed-highlight">UX/UI Design</span><span class="typed-cursor">|</span>
+      </p>
 
       <p class="hero-sub reveal-up" style="--d:0.14s">Looking for an internship opportunity to learn, grow, and contribute to real-world projects.</p>
 
       <div class="hero-actions reveal-up" style="--d:0.2s">
         <a href="#projects" class="btn btn-primary magnetic" data-cursor="view"><span>View my work</span></a>
-        <a href="#contact" class="btn btn-ghost magnetic" data-cursor="talk"><span>Get in touch</span></a>
+        <a href="resume.html" class="btn btn-ghost magnetic" data-cursor="talk"><span>View Resume</span></a>
       </div>
 
       <div class="hero-meta reveal-up" style="--d:0.26s">
@@ -485,13 +617,15 @@ body.is-loading{ overflow:hidden; }
     </div>
 
     <div class="about-copy">
-      <p class="about-headline reveal-up">สวัสดีค่ะ หนูชื่อ นางสาวณัฐสุภา โยธากุล 👋</p>
+      <p class="about-headline reveal-up">Hi, I'm Natsupha Yothakun 👋</p>
 
-      <p class="reveal-up" style="--d:0.05s">จากการเรียนและการทำโปรเจกต์ในมหาวิทยาลัย หนูได้พัฒนาทักษะด้านการพัฒนาเว็บไซต์ การออกแบบ UX/UI และการวิเคราะห์ข้อมูล โดยใช้เครื่องมือหลักคือ HTML, CSS, PHP, Figma, Power BI และ RapidMiner เพื่อเปลี่ยนไอเดียให้กลายเป็นผลงานที่ใช้งานได้จริง</p>
+      <p class="reveal-up" style="--d:0.05s">I'm a final-year Digital Business Information Systems student at Mahasarakham University.</p>
 
-      <p class="reveal-up" style="--d:0.1s">พอร์ตโฟลิโอนี้เกิดขึ้นโดยมี AI เป็นผู้ช่วยในการคิดไอเดียและสร้างโค้ดเบื้องต้น แต่หนูได้ทำการทดสอบ แก้ไขข้อมูล และปรับปรุงโค้ด เพื่อให้เข้าใจการทำงานจริงของแต่ละฟีเจอร์ ถึงแม้จะไม่ได้เขียนทุกบรรทัดด้วยตัวเอง แต่หนูตั้งใจเรียนรู้จากทุกส่วน เพื่อนำไปอธิบาย พัฒนา และต่อยอดได้อย่างมั่นใจ</p>
+      <p class="reveal-up" style="--d:0.1s">Through my studies and academic projects, I've had the opportunity to learn about web development, UX/UI design, and data analysis. Each project has helped me improve my problem-solving skills and taught me how to work with others to complete tasks and meet project goals.</p>
 
-      <p class="reveal-up" style="--d:0.15s">ตอนนี้หนูกำลังมองหาโอกาสฝึกงาน เพื่อพัฒนาทักษะของตัวเองและเรียนรู้การทำงานจริงในสภาพแวดล้อมแบบมืออาชีพ โดยเฉพาะอยากเข้าใจว่าระบบการทำงานในองค์กรจริงเป็นอย่างไร การทำงานเป็นทีมเกิดขึ้นแบบไหน และการจัดการโปรเจกต์ในชีวิตการทำงานจริงมีขั้นตอนอย่างไร หนูมีความตั้งใจอยากเรียนรู้ เติบโต และช่วยสนับสนุนทีมให้ได้มากที่สุดในช่วงฝึกงานค่ะ</p>
+      <p class="reveal-up" style="--d:0.15s">This portfolio reflects what I've learned so far. I used AI as a learning tool to help me explore ideas and understand some parts of the code, but I spent time testing, fixing, and improving everything so I could understand how it works and continue learning from it.</p>
+         <p class="reveal-up" style="--d:0.15s">I'm currently looking for an internship where I can gain real workplace experience. I want to learn how teams work together, how projects are managed, and how digital solutions are developed in an organization. I'm always willing to learn, open to feedback, and excited to improve myself through new experiences.</p>
+
     </div>
   </div>
 </section>
@@ -502,7 +636,7 @@ body.is-loading{ overflow:hidden; }
   <div class="section-inner">
     <div class="section-heading">
       <span class="section-eyebrow reveal-up">Education</span>
-      <h2 class="section-title reveal-up">Where my journey began</h2>
+      <h2 class="section-title reveal-up">Where I studied and built my foundation in digital business and technology.</h2>
     </div>
 
     <ol class="timeline">
@@ -665,7 +799,8 @@ body.is-loading{ overflow:hidden; }
         </template>
       </article>
 
-       <article class="activity-card reveal-up"
+
+      <article class="activity-card reveal-up"
          style="--d:0.25s"
          data-detail="act-5"
          tabindex="0"
@@ -712,7 +847,7 @@ body.is-loading{ overflow:hidden; }
     </template>
 
 </article>
-      
+
 
       <article class="activity-card reveal-up"style="--d:0.25s"
          data-detail="act-5"
@@ -766,7 +901,7 @@ body.is-loading{ overflow:hidden; }
     </template>
 
 </article>
-      
+
       <article class="activity-card reveal-up" style="--d:0.25s" data-detail="act-5" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="activity-header"><h3>Programming in Digital Business <span class="act-year">2022</span></h3></div>
         <div class="activity-media"><img src="img1/python.JPEG" alt="Principle of Programming in Digital Business"></div>
@@ -798,22 +933,45 @@ body.is-loading{ overflow:hidden; }
   <div class="section-inner">
     <div class="section-heading">
       <span class="section-eyebrow reveal-up">Skills</span>
-      <h2 class="section-title reveal-up">Tools &amp; technologies</h2>
+      <h2 class="section-title reveal-up">Technologies I've Learned</h2>
       <p class="section-sub reveal-up">The tools and technologies I've learned through coursework, academic projects, and continuous self-learning — mapped as a small system, since that's how I like to think about them.</p>
     </div>
-
-    <div class="skills-graph-wrap reveal-up">
-      <canvas id="skillsCanvas" width="900" height="560" aria-label="Skills network diagram grouped by Design, Data, Productivity and Emerging Tech"></canvas>
+    <div class="tech-stack-container">
+    <!-- 5 -->
+    <div class="tech-stack-row">
+        <div class="tech-item"><img src="img1/images.jpeg"><span>Microsoft Excel</span></div>
+        <div class="tech-item"><img src="img1/images9.jpeg"><span>Figma</span></div>
+        <div class="tech-item"><img src="img1/images.jpeg"><span>Power BI</span></div>
+        <div class="tech-item"><img src="img1/images.png"><span>HTML</span></div>
+        <div class="tech-item"><img src="img1/images1.png"><span>CSS</span></div>
     </div>
 
-    <div class="skills-legend reveal-up">
-      <span><i style="background:#5B4FE3"></i> Design &amp; Research</span>
-      <span><i style="background:#3E6DF0"></i> Data &amp; Analytics</span>
-      <span><i style="background:#B8874A"></i> Productivity</span>
-      <span><i style="background:#8783A0"></i> Emerging Tech</span>
+    <!-- 4 -->
+    <div class="tech-stack-row">
+        <div class="tech-item"><img src="img1/images2.png"><span>RapidMiner</span></div>
+        <div class="tech-item"><img src="img1/images3.png"><span>PHP</span></div>
+        <div class="tech-item"><img src="img1/images4.jpeg"><span>Canva</span></div>
+        <div class="tech-item"><img src="img1/python.png"><span>Python</span></div>
     </div>
+
+    <!-- 3 -->
+    <div class="tech-stack-row">
+        <div class="tech-item"><img src="img1/images5.jpeg"><span>Generative AI</span></div>
+        <div class="tech-item"><img src="img1/images6.jpeg"><span>Microsoft Word</span></div>
+        <div class="tech-item"><img src="img1/images7.jpeg"><span>PowerPoint</span></div>
+    </div>
+
+    <!-- 1 -->
+    <div class="tech-stack-row">
+        <div class="tech-item"><img src="img1/images8.png"><span>n8n</span></div>
+    </div>
+
+</div>
+    
+
   </div>
 </section>
+
 
 <div class="section-divider" aria-hidden="true"></div>
 
@@ -821,7 +979,7 @@ body.is-loading{ overflow:hidden; }
   <div class="section-inner">
     <div class="section-heading">
       <span class="section-eyebrow reveal-up">Certificates</span>
-      <h2 class="section-title reveal-up">Learning beyond the classroom</h2>
+      <h2 class="section-title reveal-up">Continuous learning, formally recognized.</h2>
       <p class="section-sub reveal-up">Courses and professional training that support my academic learning and practical skills.</p>
     </div>
 
@@ -906,8 +1064,10 @@ body.is-loading{ overflow:hidden; }
   <div class="section-inner contact-grid">
     <div class="contact-copy">
       <span class="section-eyebrow reveal-up">Contact</span>
-      <h2 class="section-title reveal-up">ยินดีที่ได้รู้จักค่ะ</h2>
-      <p class="section-sub reveal-up">ขอบคุณที่เข้ามาเยี่ยมชมพอร์ตโฟลิโอของหนู หากสนใจพูดคุยเกี่ยวกับผลงาน หรือมีโอกาสฝึกงานที่เหมาะสม สามารถติดต่อมาได้เลยนะคะ หนูพร้อมเรียนรู้ เปิดรับประสบการณ์ใหม่ และยินดีแลกเปลี่ยนความคิดเห็นเสมอค่ะ</p>
+      <h2 class="section-title reveal-up">Nice to meet you!</h2>
+      <p class="section-sub reveal-up">Thank you for taking the time to visit my portfolio. If you're interested in my work or have an internship opportunity that matches my background, I'd be happy to hear from you.
+
+I'm eager to learn, open to new experiences, and always happy to exchange ideas. I look forward to connecting with you!</p>
 
       <ul class="contact-details reveal-up">
         <li><strong>Email</strong><a href="mailto:natsupha.yo@gmail.com" data-cursor="talk">natsupha.yo@email.com</a></li>
@@ -950,9 +1110,45 @@ body.is-loading{ overflow:hidden; }
   </div>
 </footer>
 
-</div>
 
 <script>
+  /*พิมเอง*/
+  document.addEventListener('DOMContentLoaded', () => {
+  const words = ["UX/UI Design", "Data Analysis", "Business Analysis"];
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  const typedTextSpan = document.getElementById("typed-text");
+
+  function type() {
+    const currentWord = words[wordIndex];
+    
+    if (isDeleting) {
+      typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
+      charIndex++;
+    }
+
+    let typeSpeed = isDeleting ? 40 : 80;
+
+    if (!isDeleting && charIndex === currentWord.length) {
+      typeSpeed = 1800; // หยุดแช่คำไว้เมื่อพิมพ์เสร็จ
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      typeSpeed = 400; // เว้นจังหวะก่อนเริ่มพิมพ์คำใหม่
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  // เริ่มทำงานเมื่อหน้าจอพร้อม
+  if (typedTextSpan) setTimeout(type, 1000);
+});
+
 (() => {
   'use strict';
 
