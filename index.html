@@ -84,6 +84,18 @@ html{ scrollbar-width:thin; scrollbar-color:rgba(91,79,227,0.35) transparent; }
 @media (hover:hover) and (pointer:fine){
   body,a,button,.tilt-card,[data-cursor]{ cursor:none; }
 }
+.lab-rail a:hover,
+.lab-rail a.is-active{ color:var(--violet-deep); border-color:var(--violet); transform:translateX(4px); }
+
+.site-header{ top:14px; left:18px; right:18px; border-radius:18px; border:1px solid rgba(33,29,24,.08); }
+.site-header.is-scrolled{ border-color:rgba(33,29,24,.13); }
+.header-inner{ height:68px; }
+.brand-mark{ border-radius:12px; background:linear-gradient(145deg,var(--ink),var(--violet-deep)); }
+.primary-nav ul{ gap:22px; }
+.primary-nav a{ font-size:.88rem; }
+.scroll-progress{ border-radius:999px; bottom:-1px; }
+
+
 
 /* ---------- background: ledger grid + soft light fields ---------- */
 .bg-decor{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
@@ -162,53 +174,570 @@ body.is-loading{ overflow:hidden; }
 .magnetic{ transform:translate(var(--mx,0),var(--my,0)); }
 
 /* ---------- header ---------- */
-.site-header{ position:fixed; top:0; left:0; right:0; z-index:500; background:rgba(242,240,248,.55); backdrop-filter:blur(18px) saturate(160%); border-bottom:1px solid transparent; transition:border-color .4s, background .4s, box-shadow .4s; }
-.site-header.is-scrolled{ border-bottom-color:var(--line); background:rgba(251,250,252,.85); box-shadow:var(--shadow-sm); }
-.header-inner{ display:flex; align-items:center; gap:28px; height:76px; }
-.brand{ display:flex; align-items:center; gap:11px; margin-right:auto; font-family:var(--font-display); font-weight:600; color:var(--ink); }
-.brand-mark{ display:grid; place-items:center; width:34px; height:34px; border-radius:9px; background:var(--gradient); color:#fff; font-size:.8rem; font-weight:700; box-shadow:var(--shadow-sm); transition:box-shadow .3s, transform .3s; }
-.brand:hover .brand-mark{ box-shadow:var(--shadow-md); transform:rotate(-6deg); }
-.primary-nav ul{ display:flex; gap:30px; }
-.primary-nav a{ font-size:.92rem; color:var(--ink-soft); position:relative; padding:4px 0; transition:color .25s; font-weight:500; }
-.primary-nav a::after{ content:''; position:absolute; left:0; right:100%; bottom:-2px; height:1.5px; background:var(--gradient); border-radius:2px; transition:right .35s var(--ease-out); }
-.primary-nav a:hover{ color:var(--ink); }
-.primary-nav a:hover::after{ right:0; }
-.nav-toggle{ display:none; flex-direction:column; gap:5px; background:none; border:none; padding:8px; }
-.nav-toggle span{ width:22px; height:2px; background:var(--ink); border-radius:2px; transition:transform .3s, opacity .3s; }
-.scroll-progress{ position:absolute; bottom:0; left:0; height:2px; width:0%; background:var(--gradient-wide); transition:width .1s linear; }
+/* =========================================================================
+   SITE HEADER & NAVIGATION SYSTEM (ALL RELATED STYLES)
+   ========================================================================= */
 
-.mobile-nav{ position:fixed; inset:76px 0 0 0; z-index:490; background:rgba(251,250,252,.98); backdrop-filter:blur(20px); transform:translateY(-8px); opacity:0; pointer-events:none; transition:opacity .35s var(--ease-out), transform .35s var(--ease-out); display:flex; align-items:center; }
-.mobile-nav.is-open{ opacity:1; transform:translateY(0); pointer-events:auto; }
-.mobile-nav ul{ width:100%; padding:20px 32px; display:flex; flex-direction:column; gap:4px; }
-.mobile-nav a{ display:block; padding:14px 0; font-size:1.4rem; font-family:var(--font-display); border-bottom:1px solid var(--line); transition:color .25s, padding-left .25s; }
-.mobile-nav a:hover{ color:var(--violet); padding-left:8px; }
+/* โครงสร้างหลักของแถบ Header (การตั้งค่าตำแหน่ง, พื้นหลัง และการเบลอ) */
+.site-header { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 500; 
+  background: rgba(242, 240, 248, .55); 
+  backdrop-filter: blur(18px) saturate(160%); 
+  border-bottom: 1px solid transparent; 
+  transition: border-color .4s, background .4s, box-shadow .4s; 
+  
+  /* ตัวปรับแต่งเพิ่มเติมจากด้านล่างของไฟล์คุณ: ปรับขอบโค้งมนและระยะห่าง */
+  top: 14px; 
+  left: 18px; 
+  right: 18px; 
+  border-radius: 18px; 
+  border: 1px solid rgba(33, 29, 24, .08); 
+}
+
+/* เอฟเฟกต์สไตล์เมื่อหน้าจอมีการเลื่อนเวย์สกรอลล์ลงมา (Scrolled State) */
+.site-header.is-scrolled { 
+  border-bottom-color: var(--line); 
+  background: rgba(251, 250, 252, .85); 
+  box-shadow: var(--shadow-sm); 
+  border-color: rgba(33, 29, 24, .13); /* ตัวปรับแต่งเพิ่มเติม */
+}
+
+/* กล่องจัดการเนื้อหาภายใน Header */
+.header-inner { 
+  display: flex; 
+  align-items: center; 
+  gap: 28px; 
+  height: 76px; 
+  max-width: var(--container); 
+  margin: 0 auto; 
+  padding: 0 32px; 
+  height: 68px; /* ตัวปรับแต่งเพิ่มความกระชับความสูง */
+}
+
+/* ส่วนของโลโก้แบรนด์ และชื่อ (Brand & Mark) */
+.brand { 
+  display: flex; 
+  align-items: center; 
+  gap: 11px; 
+  margin-right: auto; 
+  font-family: var(--font-display); 
+  font-weight: 600; 
+  color: var(--ink); 
+}
+
+.brand-mark { 
+  display: grid; 
+  place-items: center; 
+  width: 34px; 
+  height: 34px; 
+  border-radius: 9px; 
+  background: var(--gradient); 
+  color: #fff; 
+  font-size: .8rem; 
+  font-weight: 700; 
+  box-shadow: var(--shadow-sm); 
+  transition: box-shadow .3s, transform .3s; 
+  
+  /* ตัวปรับแต่งเพิ่มเติม: เปลี่ยนรูปทรงความโค้งและไล่เฉดสีลึก */
+  border-radius: 12px; 
+  background: linear-gradient(145deg, var(--ink), var(--violet-deep)); 
+}
+
+.brand:hover .brand-mark { 
+  box-shadow: var(--shadow-md); 
+  transform: rotate(-6deg); 
+}
+
+/* เมนูหลักเวอร์ชันหน้าจอคอมพิวเตอร์ (Primary Navigation) */
+.primary-nav ul { 
+  display: flex; 
+  gap: 30px; 
+  gap: 22px; /* ตัวปรับแต่งลดระยะห่างของช่องเมนู */
+}
+
+.primary-nav a { 
+  font-size: .92rem; 
+  font-size: .88rem; /* ตัวปรับแต่งลดขนาดตัวอักษรของลิงก์ */
+  color: var(--ink-soft); 
+  position: relative; 
+  padding: 4px 0; 
+  transition: color .25s; 
+  font-weight: 500; 
+}
+
+/* เอฟเฟกต์เส้นใต้สไลด์วิ่งสลับเมื่อเมาส์ชี้เมนู (Animated Underline) */
+.primary-nav a::after { 
+  content: ''; 
+  position: absolute; 
+  left: 0; 
+  right: 100%; 
+  bottom: -2px; 
+  height: 1.5px; 
+  background: var(--gradient); 
+  border-radius: 2px; 
+  transition: right .35s var(--ease-out); 
+}
+
+.primary-nav a:hover { 
+  color: var(--ink); 
+}
+
+.primary-nav a:hover::after { 
+  right: 0; 
+}
+
+/* ปุ่มกดบนมุมขวาของ Header (Get in Touch) */
+.btn-small { 
+  padding: 10px 20px; 
+  font-size: .85rem; 
+}
+
+/* ปุ่มเปิด-ปิดเมนูบนหน้าจอมือถือ (Hamburger Toggle Button) */
+.nav-toggle { 
+  display: none; 
+  flex-direction: column; 
+  gap: 5px; 
+  background: none; 
+  border: none; 
+  padding: 8px; 
+}
+
+.nav-toggle span { 
+  width: 22px; 
+  height: 2px; 
+  background: var(--ink); 
+  border-radius: 2px; 
+  transition: transform .3s, opacity .3s; 
+}
+
+/* เส้นแสดงความคืบหน้าของการสกรอลล์อ่านหน้าเว็บ (Scroll Progress Bar) */
+.scroll-progress { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  height: 2px; 
+  width: 0%; 
+  background: var(--gradient-wide); 
+  transition: width .1s linear; 
+  border-radius: 999px; /* ตัวปรับแต่งเพิ่มเติม */
+  bottom: -1px;          /* ตัวปรับแต่งเพิ่มเติม */
+}
+
+/* แผงเมนูสไลด์บานพับบนอุปกรณ์พกพา (Mobile Fullscreen Navigation) */
+.mobile-nav { 
+  position: fixed; 
+  inset: 76px 0 0 0; 
+  z-index: 490; 
+  background: rgba(251, 250, 252, .98); 
+  backdrop-filter: blur(20px); 
+  transform: translateY(-8px); 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity .35s var(--ease-out), transform .35s var(--ease-out); 
+  display: flex; 
+  align-items: center; 
+}
+
+.mobile-nav.is-open { 
+  opacity: 1; 
+  transform: translateY(0); 
+  pointer-events: auto; 
+}
+
+.mobile-nav ul { 
+  width: 100%; 
+  padding: 20px 32px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+}
+
+.mobile-nav a { 
+  display: block; 
+  padding: 14px 0; 
+  font-size: 1.4rem; 
+  font-family: var(--font-display); 
+  border-bottom: 1px solid var(--line); 
+  transition: color .25s, padding-left .25s; 
+}
+
+.mobile-nav a:hover { 
+  color: var(--violet); 
+  padding-left: 8px; 
+}
+
+/* =========================================================================
+   MEDIA QUERIES (ส่วนควบคุมการแสดงผลของ Header บนขนาดหน้าจอต่าง ๆ)
+   ========================================================================= */
+@media (max-width: 760px) {
+  /* ซ่อนเมนูหลักและปุ่ม Get in Touch บนมือถือ แล้วเปิดใช้งานปุ่มแฮมเบอร์เกอร์แทน */
+  .primary-nav, .header-inner .btn-small { 
+    display: none; 
+  }
+  .nav-toggle { 
+    display: flex; 
+  }
+  .header-inner { 
+    padding: 0 20px; 
+  }
+}
 
 /* ---------- hero ---------- */
-.hero{ position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding-top:76px; overflow:hidden; }
-.hero-grid{ position:absolute; inset:0; z-index:0; background-image:linear-gradient(rgba(29,27,46,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(29,27,46,0.05) 1px, transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, black 25%, transparent 78%); -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, black 25%, transparent 78%); }
-.blob-canvas{ position:absolute; inset:0; z-index:0; opacity:.9; }
-.hero-inner{ position:relative; z-index:1; padding-top:40px; padding-bottom:60px; display:grid; grid-template-columns:1fr auto; gap:40px; align-items:start; }
-.hero-copy{ grid-column:1; }
-.hero-side{ grid-column:2; padding-top:14px; display:flex; flex-direction:column; align-items:flex-end; gap:26px; text-align:right; }
-.hero-side-tag{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); max-width:150px; line-height:1.6; }
-.hero-eyebrow{ display:inline-flex; align-items:center; gap:9px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink); border:1px solid var(--line-strong); border-radius:999px; padding:8px 16px 8px 12px; background:rgba(255,255,255,.5); backdrop-filter:blur(8px); margin-bottom:26px; }
-.pulse-dot{ width:7px; height:7px; border-radius:50%; background:var(--violet); box-shadow:0 0 0 0 rgba(91,79,227,.55); animation:pulse 2s infinite; }
-@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(91,79,227,.5); } 70%{ box-shadow:0 0 0 9px rgba(91,79,227,0); } 100%{ box-shadow:0 0 0 0 rgba(91,79,227,0); } }
-.hero-title{ font-size:clamp(2.5rem,6.6vw,5.2rem); line-height:1.1; letter-spacing:-0.02em; color:var(--ink); font-weight:600; }
-.hero-title em{ font-style:italic; font-weight:500; }
-.split-line{ display:block; overflow:hidden; margin-bottom:2px; }
-.split-word{ display:inline-block; transform:translateY(115%); animation:wordUp .95s var(--ease-out) forwards; animation-delay:calc(var(--i,0) * .06s + .15s); will-change:transform; }
-@keyframes wordUp{ to{ transform:translateY(0); } }
-.hero-tagline{ margin-top:20px; font-family:var(--font-mono); font-size:.95rem; letter-spacing:.02em; color:var(--violet-deep); }
-.hero-sub{ margin-top:18px; max-width:46ch; font-size:1.14rem; color:var(--ink-soft); line-height:1.65; }
-.hero-actions{ margin-top:36px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
-.hero-meta{ margin-top:40px; font-size:.86rem; color:var(--ink-dim); display:flex; gap:10px; flex-wrap:wrap; font-family:var(--font-mono); }
-.dot-sep{ opacity:.6; color:var(--violet); }
-.scroll-cue{ position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:10px; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim); z-index:1; transition:color .3s, transform .3s; }
-.scroll-cue:hover{ color:var(--violet); transform:translateX(-50%) translateY(-2px); }
-.scroll-cue-line{ width:1px; height:40px; background:linear-gradient(var(--ink-dim), transparent); position:relative; overflow:hidden; }
-.scroll-cue-line::after{ content:''; position:absolute; top:-40px; left:0; width:1px; height:40px; background:var(--violet); animation:cueDrop 1.8s var(--ease-out) infinite; }
-@keyframes cueDrop{ to{ top:40px; } }
+/* =========================================================================
+   HERO SECTION SYSTEM (ALL RELATED STYLES)
+   ========================================================================= */
+
+/* โครงสร้างพื้นหลัง ระยะความสูง และพื้นที่หลักของส่วน Hero */
+.hero { 
+  position: relative; 
+  min-height: 100svh; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  padding-top: 76px; 
+  overflow: hidden; 
+  
+  /* ตัวอัปเกรดเพิ่มเติม (Experience Upgrade) */
+  isolation: isolate; 
+}
+
+/* เอฟเฟกต์เส้นใต้ตกแต่งแบ่งสัดส่วนที่ฐานล่างของ Hero (จากพาร์ทอัปเกรด) */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 5vw;
+  right: 5vw;
+  bottom: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(33,29,24,.18), transparent);
+}
+
+/* แผงตารางกริดจำลองบนพื้นหลัง (Ledger Grid Pattern) */
+.hero-grid { 
+  position: absolute; 
+  inset: 0; 
+  z-index: 0; 
+  background-image: 
+    linear-gradient(rgba(29,27,46,0.05) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(29,27,46,0.05) 1px, transparent 1px); 
+  background-size: 56px 56px; 
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 25%, transparent 78%); 
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 25%, transparent 78%); 
+}
+
+/* พื้นที่แคนวาสสำหรับรองรับเม็ดสีเบลอขยับเคลื่อนไหวพริ้ว (Interactive Blobs) */
+.blob-canvas { 
+  position: absolute; 
+  inset: 0; 
+  z-index: 0; 
+  opacity: .9; 
+}
+
+/* กล่องจัดเลเอาท์สัดส่วนเนื้อหาภายในส่วน Hero */
+.hero-inner { 
+  position: relative; 
+  z-index: 1; 
+  padding-top: 40px; 
+  padding-bottom: 60px; 
+  display: grid; 
+  grid-template-columns: 1fr auto; 
+  gap: 40px; 
+  align-items: start; 
+  max-width: var(--container); 
+  margin: 0 auto; 
+  padding: 0 32px; 
+}
+
+/* ฝั่งกล่องเนื้อหาข้อความและปุ่มแอคชันหลัก (ด้านซ้าย) */
+.hero-copy { 
+  grid-column: 1; 
+}
+
+/* ฝั่งกล่องข้อความเสริมบอกข้อมูลประจำตัวด้านข้าง (ด้านขวา) */
+.hero-side { 
+  grid-column: 2; 
+  padding-top: 14px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-end; 
+  gap: 26px; 
+  text-align: right; 
+}
+
+.hero-side-tag { 
+  font-family: var(--font-mono); 
+  font-size: 11.5px; 
+  letter-spacing: .1em; 
+  text-transform: uppercase; 
+  color: var(--ink-dim); 
+  max-width: 150px; 
+  line-height: 1.6; 
+}
+
+/* ป้ายบอกสถานะเปิดรับสมัครฝึกงาน (Eyebrow Status Tag) */
+/* =========================================================================
+   HERO EYEBROW STATUS TAG (MINT GREEN PULSE EDITION)
+   ========================================================================= */
+/* ป้ายบอกสถานะเปิดรับสมัครฝึกงาน (ขยับระยะห่างเพิ่มขึ้นเพื่อไม่ให้ทับบาร์ Header) */
+.hero-eyebrow { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 9px; 
+  font-family: var(--font-mono); 
+  font-size: 12.5px; 
+  letter-spacing: .09em; 
+  text-transform: uppercase; 
+  color: var(--ink); 
+  border: 1px solid var(--line-strong); 
+  border-radius: 999px; 
+  padding: 8px 16px 8px 12px; 
+  background: rgba(255,255,255,.5); 
+  backdrop-filter: blur(8px); 
+  
+  /* ⚡ แก้ไขระยะตรงนี้: เพิ่ม margin-top เพื่อดันตัวกล่องขยับลงมาจากแนว Header */
+  margin-top: 24px; 
+  margin-bottom: 26px; 
+  
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.42), var(--shadow-sm); 
+}
+
+/* 🟢 ปรับปรุงจุดไฟกะพริบแสดงสถานะ: เปลี่ยนเป็นโทนสีเขียวพริ้วไหว (Mint Green) */
+/* =========================================================================
+   🟢 HIGH-VISIBILITY MINT PULSE DOT (แก้ไขความคมชัดของเม็ดกลม)
+   ========================================================================= */
+.pulse-dot { 
+  width: 8px;        /* ⚡ ปรับขนาดเพิ่มขึ้นเล็กน้อยจาก 7px เป็น 8px เพื่อให้จับสายตาได้ดีขึ้น */
+  height: 8px; 
+  border-radius: 50%; 
+  
+  /* บังคับสีพื้นหลังให้ทึบแน่น 100% ไม่ใช้โปร่งแสง เพื่อไม่ให้เม็ดกลางจมหาย */
+  background: #00ffaa; 
+  
+  /* ⚡ ปรับปรุงเงาเริ่มต้น: ชั้นแรกทำเป็นออร่าเรืองแสงวงแคบติดตัวเม็ด / ชั้นสองเป็นเงาซอฟต์ซ้อนหลัง */
+  box-shadow: 
+    0 0 10px 2px #00ffaa,
+    0 0 0 0 rgba(0, 255, 170, 0.6);
+    
+  animation: pulsePerfect 2s cubic-bezier(0.16, 1, 0.3, 1) infinite; 
+  display: inline-block;
+}
+
+@keyframes pulsePerfect { 
+  0% { 
+    /* ตอนเริ่มต้น: เม็ดตรงกลางเรืองแสงเข้มข้นที่สุด */
+    box-shadow: 
+      0 0 10px 2px #00ffaa,
+      0 0 0 0 rgba(0, 255, 170, 0.65);
+  } 
+  70% { 
+    /* จังหวะแผ่กระจาย: วงแหวนออร่าด้านนอกขยายกว้างออก 12px แล้วค่อยๆ จางลง โดยที่เม็ดกลางยังคงเรืองแสงติดตัวอยู่ */
+    box-shadow: 
+      0 0 8px 1px rgba(0, 255, 170, 0.5),
+      0 0 0 12px rgba(0, 255, 170, 0);
+  } 
+  100% { 
+    /* จังหวะเซ็ตตัวกลับมาจุดเริ่มต้นแบบนุ่มนวล */
+    box-shadow: 
+      0 0 10px 2px #00ffaa,
+      0 0 0 0 rgba(0, 255, 170, 0);
+  } 
+}
+
+
+
+/* ส่วนหัวข้อขนาดใหญ่ยักษ์ประจำหน้าแรก (Main Title) */
+.hero-title { 
+  font-size: clamp(2.5rem,6.6vw,5.2rem); 
+  line-height: 1.1; 
+  letter-spacing: -0.02em; 
+  color: var(--ink); 
+  font-weight: 600; 
+  
+  /* ตัวอัปเกรดเพิ่มเติม */
+  max-width: 980px; 
+}
+
+.hero-title em { 
+  font-style: italic; 
+  font-weight: 500; 
+}
+
+/* แอนิเมชันดันคำและสไลด์ตัวอักษรขึ้นมาตอนเปิดโหลดหน้าเว็บ (Text Reveal Animation) */
+.split-line { 
+  display: block; 
+  overflow: hidden; 
+  margin-bottom: 2px; 
+}
+
+.split-word { 
+  display: inline-block; 
+  transform: translateY(115%); 
+  animation: wordUp .95s var(--ease-out) forwards; 
+  animation-delay: calc(var(--i,0) * .06s + .15s); 
+  will-change: transform; 
+}
+
+@keyframes wordUp { 
+  to { transform: translateY(0); } 
+}
+
+/* ข้อความแสดงตำแหน่งโฟกัส (Tagline Area) */
+.hero-tagline { 
+  margin-top: 20px; 
+  font-family: var(--font-mono); 
+  font-size: .95rem; 
+  letter-spacing: .02em; 
+  color: var(--violet-deep); 
+}
+
+/* ข้อความส่วนพิมพ์วิ่งเอฟเฟกต์สีและคอร์เซอร์กะพริบ (Typed Text Animations) */
+.typed-highlight { 
+  color: var(--violet-deep); 
+  font-weight: 700; 
+}
+
+.typed-cursor { 
+  display: inline-block; 
+  color: var(--clay); 
+  animation: cursorBlink .9s steps(2,end) infinite; 
+}
+
+@keyframes cursorBlink { 
+  50% { opacity: 0; } 
+}
+
+/* ข้อความอธิบายความตั้งใจย่อตัวรองลงมา (Sub-heading text) */
+.hero-sub { 
+  margin-top: 18px; 
+  max-width: 46ch; 
+  font-size: 1.14rem; 
+  color: var(--ink-soft); 
+  line-height: 1.65; 
+}
+
+/* กลุ่มแผงจัดการตำแหน่งปุ่มกด "View my work" และ "View Resume" */
+.hero-actions { 
+  margin-top: 36px; 
+  display: flex; 
+  gap: 16px; 
+  flex-wrap: wrap; 
+  align-items: center; 
+}
+
+/* ตัวหนังสือประกอบขนาดจิ๋วบอกตำแหน่งสถานที่ตั้งด้านล่างปุ่ม */
+.hero-meta { 
+  margin-top: 40px; 
+  font-size: .86rem; 
+  color: var(--ink-dim); 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap; 
+  font-family: var(--font-mono); 
+}
+
+.dot-sep { 
+  opacity: .6; 
+  color: var(--violet); 
+}
+
+/* สัญลักษณ์และลูกศรเส้นวิ่งบอกใบ้ให้ผู้ใช้งานเลื่อนสกรอลล์ลงด้านล่าง (Scroll Cue Indicator) */
+.scroll-cue { 
+  position: absolute; 
+  bottom: 36px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
+  font-family: var(--font-mono); 
+  font-size: 11px; 
+  letter-spacing: .12em; 
+  text-transform: uppercase; 
+  color: var(--ink-dim); 
+  z-index: 1; 
+  transition: color .3s, transform .3s; 
+}
+
+.scroll-cue:hover { 
+  color: var(--violet); 
+  transform: translateX(-50%) translateY(-2px); 
+}
+
+.scroll-cue-line { 
+  width: 1px; 
+  height: 40px; 
+  background: linear-gradient(var(--ink-dim), transparent); 
+  position: relative; 
+  overflow: hidden; 
+}
+
+.scroll-cue-line::after { 
+  content: ''; 
+  position: absolute; 
+  top: -40px; 
+  left: 0; 
+  width: 1px; 
+  height: 40px; 
+  background: var(--violet); 
+  animation: cueDrop 1.8s var(--ease-out) infinite; 
+}
+
+@keyframes cueDrop { 
+  to { top: 40px; } 
+}
+
+/* โมดูลตกแต่งจานหมุนสถิติสไตล์ห้องแล็บแลกเปลี่ยนข้อมูล (Lab Dial) ที่วิ่งลอยอยู่ฝั่งขวา */
+.lab-dial {
+  position: relative;
+  width: 188px;
+  height: 188px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(33,29,24,.14);
+  background: radial-gradient(circle at 42% 36%, rgba(255,255,255,.84), rgba(255,252,246,.36) 58%, rgba(103,84,217,.08));
+  box-shadow: var(--shadow-md);
+  animation: dialFloat 6s ease-in-out infinite;
+}
+
+.lab-dial::before,
+.lab-dial::after { content:''; position:absolute; inset:18px; border:1px dashed rgba(33,29,24,.18); border-radius:50%; animation:spinSlow 18s linear infinite; }
+.lab-dial::after { inset:44px; animation-direction:reverse; animation-duration:13s; border-color:rgba(103,84,217,.22); }
+
+.dial-core { width:62px; height:62px; border-radius:18px; display:grid; place-items:center; background:var(--ink); color:var(--paper-2); font-family:var(--font-display); font-weight:700; }
+.dial-node { position:absolute; display:grid; place-items:center; min-width:42px; height:30px; padding:0 9px; border-radius:999px; background:var(--paper-2); border:1px solid var(--line); font-family:var(--font-mono); font-size:10px; color:var(--ink-soft); box-shadow:var(--shadow-sm); }
+.dial-node-a { top:12px; left:21px; }
+.dial-node-b { right:8px; top:70px; }
+.dial-node-c { bottom:14px; left:56px; }
+
+@keyframes spinSlow { to { transform:rotate(360deg); } }
+@keyframes dialFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+
+/* =========================================================================
+   MEDIA QUERIES (ส่วนตัดสกรีนจัดการจอแสดงผลบนหน้าจอมือถือและแท็บเล็ต)
+   ========================================================================= */
+@media (max-width: 980px) {
+  /* ยุบกลับเป็น 1 คอลัมน์ และสั่งซ่อนแถบข้างขวา (hero-side) ออกทั้งหมดเพื่อให้อ่านง่าย */
+  .hero-inner { 
+    grid-template-columns: 1fr; 
+    padding: 0 20px;
+  }
+  .hero-side { 
+    display: none; 
+  }
+}
+
+@media (max-width: 760px) {
+  /* ปรับความสูงช่องหัวบนชดเชยการปรับ Header บนอุปกรณ์จอมือถือ */
+  .hero { 
+    padding-top: 86px; 
+  }
+}
 
 /* ---------- about (asymmetric split) ---------- */
 .about-grid{ display:grid; grid-template-columns:280px 1fr; grid-template-areas:"heading heading" "portrait copy"; gap:20px 64px; }
@@ -246,25 +775,182 @@ body.is-loading{ overflow:hidden; }
 .tilt-card{ transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0); transition:transform .45s var(--ease-out); will-change:transform; }
 
 /* ---------- projects ---------- */
-.project-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:28px; }
-.project-grid .project-card:first-child{ grid-column:1 / -1; }
-.project-grid .project-card:first-child .project-media{ aspect-ratio:21/9; }
-.project-card{ position:relative; background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius-lg); overflow:hidden; display:flex; flex-direction:column; box-shadow:var(--shadow-sm); transition:border-color .4s, transform .45s var(--ease-out), box-shadow .45s var(--ease-out); }
-.project-card:hover, .project-card:focus-visible{ border-color:rgba(91,79,227,.3); transform:translateY(-6px); box-shadow:var(--shadow-lg); }
-.project-media{ position:relative; aspect-ratio:16/9; overflow:hidden; background:var(--paper-3); }
-.project-media img{ transition:transform .7s var(--ease-out); }
-.project-card:hover .project-media img{ transform:scale(1.055); }
-.project-media::after{ content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, transparent 55%, rgba(29,27,46,.35) 100%); }
-.project-year{ position:absolute; top:16px; right:16px; z-index:2; font-family:var(--font-mono); font-size:11px; background:rgba(251,250,252,.85); backdrop-filter:blur(8px); padding:5px 10px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink); }
-.project-body{ padding:26px 26px 8px; flex:1; }
-.project-body h3{ font-size:1.34rem; color:var(--ink); }
-.project-body p{ color:var(--ink-soft); margin-top:8px; font-size:.97rem; }
-.tag-list{ display:flex; gap:8px; flex-wrap:wrap; margin-top:17px; }
-.tag-list li{ font-family:var(--font-mono); font-size:11px; padding:4px 10px; border:1px solid var(--line-strong); border-radius:999px; color:var(--ink-dim); transition:border-color .3s, color .3s; }
-.project-card:hover .tag-list li{ border-color:rgba(91,79,227,.4); color:var(--violet-deep); }
-.project-card-actions{ display:flex; gap:12px; margin-top:16px; flex-wrap:wrap; padding:0 26px 26px; border-top:1px solid var(--line); padding-top:18px; margin-top:20px; }
-.project-card-cta{ display:inline-flex; align-items:center; gap:6px; font-size:.86rem; font-weight:600; color:var(--violet-deep); letter-spacing:.01em; transition:transform .35s var(--ease-spring), color .25s; }
-.project-card-cta:hover{ color:var(--violet); transform:translateX(3px); }
+/* =========================================================================
+   ⚡ ปรับปรุงส่วนที่ 1: PROJECT GRID SYSTEM (EQUAL SIZE - LIGHT GLASS EDITION)
+   ปรับขนาดให้เท่ากันหมด 2 คอลัมน์อย่างสมมาตรตามสไตล์สีเดิม
+   ========================================================================= */
+.project-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 28px; 
+}
+
+.project-card { 
+  position: relative; 
+  background: var(--paper-2); 
+  backdrop-filter: blur(14px) saturate(140%); 
+  -webkit-backdrop-filter: blur(14px) saturate(140%); 
+  border: 1px solid var(--line); 
+  border-radius: var(--radius-lg); 
+  overflow: hidden; 
+  display: flex;  flex-direction: column; 
+  transition: border-color 0.4s, transform 0.45s var(--ease-out), box-shadow 0.45s var(--ease-out); 
+}
+
+.project-card::after { 
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  border-radius: inherit; 
+  padding: 1px; 
+  background: linear-gradient(120deg, var(--violet), var(--blue)); 
+  opacity: 0; 
+  transition: opacity 0.45s; 
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); 
+  -webkit-mask-composite: xor; 
+  mask-composite: exclude; 
+  pointer-events: none; 
+}
+
+.project-card:hover, .project-card:focus-visible { 
+  border-color: transparent; 
+  transform: translateY(-5px); 
+  box-shadow: 0 26px 60px -26px rgba(91, 79, 227, 0.3), var(--shadow-md); 
+}
+.project-card:hover::after, .project-card:focus-visible::after { 
+  opacity: 1; 
+}
+
+.project-media { 
+  position: relative; 
+  aspect-ratio: 16/9; 
+  overflow: hidden; 
+  background: var(--paper-3); 
+}
+
+.project-media-fallback { 
+  position: absolute; 
+  inset: 0; 
+  background: linear-gradient(135deg, var(--violet), var(--blue)); 
+  transition: transform 0.7s var(--ease-out); 
+}
+
+.project-media::before { 
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  z-index: 1; 
+  background: linear-gradient(180deg, transparent 40%, rgba(29, 27, 46, 0.15) 100%); 
+}
+
+.project-card:hover .project-media-fallback { 
+  transform: scale(1.06) rotate(0.5deg); 
+}
+
+.project-year { 
+  position: absolute; 
+  top: 16px; 
+  right: 16px; 
+  z-index: 2; 
+  font-family: var(--font-mono); 
+  font-size: 11px; 
+  background: rgba(251, 250, 252, 0.85); 
+  backdrop-filter: blur(8px); 
+  padding: 5px 10px; 
+  border-radius: 999px; 
+  border: 1px solid var(--line-strong); 
+  color: var(--ink); 
+}
+
+.project-body { 
+  padding: 26px 26px 8px; 
+  flex: 1; 
+}
+
+.project-body h3 { 
+  font-size: 1.32rem; 
+  color: var(--ink); 
+}
+
+.project-body p { 
+  color: var(--ink-soft); 
+  margin-top: 8px; 
+  font-size: 0.96rem; 
+}
+
+.tag-list { 
+  display: flex; 
+  gap: 8px; 
+  flex-wrap: wrap; 
+  margin-top: 17px; 
+}
+
+.tag-list li { 
+  font-family: var(--font-mono); 
+  font-size: 11px; 
+  padding: 4px 10px; 
+  border: 1px solid var(--line-strong); 
+  border-radius: 999px; 
+  color: var(--ink-dim); 
+  transition: border-color 0.3s, color 0.3s; 
+}
+
+.project-card:hover .tag-list li { 
+  border-color: rgba(91, 79, 227, 0.4); 
+  color: var(--violet-deep); 
+}
+
+.project-card-cta { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 10px; 
+  margin-top: 20px; 
+  padding: 18px 26px; 
+  border-top: 1px solid var(--line); 
+  font-size: 0.88rem; 
+  font-weight: 600; 
+  color: var(--violet-deep); 
+  letter-spacing: 0.02em; 
+  transition: background 0.3s var(--ease-smooth); 
+  text-decoration: none;
+}
+
+.project-card-cta span { 
+  display: inline-block; 
+  will-change: transform, color; 
+  transition: transform 0.4s cubic-bezier(0.25, 1.1, 0.4, 1), color 0.3s ease; 
+}
+
+.project-card-cta svg { 
+  display: inline-block; 
+  will-change: transform, filter; 
+  transition: transform 0.4s cubic-bezier(0.25, 1.1, 0.4, 1), filter 0.3s ease; 
+}
+
+.project-card:hover .project-card-cta span { 
+  transform: scale(1.06) translate3d(4px, 0, 0); 
+  color: var(--violet) !important; 
+}
+
+.project-card:hover .project-card-cta svg { 
+  transform: scale(1.15) translate3d(8px, 0, 0); 
+  color: var(--violet) !important; 
+  filter: drop-shadow(0 2px 8px rgba(91, 79, 227, 0.2)); 
+}
+
+.project-card:hover .project-card-cta { 
+  background: rgba(91, 79, 227, 0.02); 
+}
+
+.project-card-actions { 
+  display: flex; 
+  gap: 12px; 
+  margin-top: 16px; 
+  flex-wrap: wrap; 
+  padding: 0 26px 26px; 
+}
+
 
 /* ---------- activities ---------- */
 .activity-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:28px; margin-top:40px; }
@@ -295,40 +981,427 @@ body.is-loading{ overflow:hidden; }
 .skills-legend i{ width:9px; height:9px; border-radius:2px; display:inline-block; }
 
 /* ---------- certificates carousel ---------- */
-.cert-carousel-container{ width:100%; overflow-x:auto; padding:30px 4px; scroll-behavior:auto; scrollbar-width:none; }
-.cert-carousel-container::-webkit-scrollbar{ display:none; }
-.cert-carousel-track{ display:flex; gap:28px; width:max-content; padding-right:40px; }
-.cert-slide{ display:flex; background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius-lg); width:560px; height:270px; overflow:hidden; box-shadow:var(--shadow-sm); transition:transform .4s var(--ease-out), border-color .4s, box-shadow .4s; }
-.cert-slide:hover{ transform:translateY(-6px); border-color:rgba(91,79,227,.3); box-shadow:var(--shadow-md); }
-.cert-image-frame{ width:44%; height:100%; background:var(--paper-3); overflow:hidden; border-right:1px solid var(--line); position:relative; display:grid; place-items:center; }
-.cert-image-frame embed, .cert-image-frame img{ width:100%; height:100%; object-fit:contain; padding:10px; transition:transform .5s ease; pointer-events:none; }
-.cert-slide:hover .cert-image-frame img{ transform:scale(1.04); }
-.cert-info{ width:56%; padding:28px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:10px; }
-.cert-badge{ font-family:var(--font-mono); font-size:.72rem; background:rgba(91,79,227,.1); color:var(--violet-deep); padding:4px 10px; border-radius:var(--radius-sm); font-weight:600; }
-.cert-info h3{ font-size:1.15rem; color:var(--ink); line-height:1.4; margin:0; font-weight:600; }
-.cert-info p{ font-size:.88rem; color:var(--ink-soft); margin:0; }
-.cert-link-btn{ margin-top:auto; font-family:var(--font-mono); font-size:.8rem; color:var(--violet-deep); font-weight:600; transition:color .2s, transform .2s; }
-.cert-link-btn:hover{ color:var(--violet); transform:translateX(3px); }
 
-/* ---------- contact ---------- */
-.contact-grid{ display:grid; grid-template-columns:1fr; gap:40px; align-items:start; }
-.contact-details{ margin-top:36px; display:grid; grid-template-columns:repeat(2,1fr); gap:24px 40px; }
-.contact-details li{ display:flex; flex-direction:column; gap:4px; }
-.contact-details strong{ font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); font-family:var(--font-mono); font-weight:500; }
-.contact-details a{ transition:color .25s, transform .25s var(--ease-out); display:inline-block; }
-.contact-details a:hover{ color:var(--violet); transform:translateX(4px); }
+/* =========================================================================
+   ✨ NEW PREMIUM GLASS-TECH GRID (ดีไซน์กระจกใส ล้ำสมัย สไตล์ Data Interface)
+   ========================================================================= */
 
+/* เลเอาท์กริดแบบ 2 คอลัมน์ เส้นขอบคมชัด สไตล์แดชบอร์ด */
+.cert-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  width: 100%;
+  padding: 20px 0;
+}
+
+/* ตัวการ์ดสไตล์กระจกใสตัดขอบเหลี่ยมคมเฉียบ (Minimalist but High-Tech) */
+.cert-slide {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(21, 20, 46, 0.08);
+  
+  /* ลบความโค้งมนแบบเดิมออก เปลี่ยนเป็นความมนระดับหรูหราคมกริบ */
+  border-radius: 32px 6px 32px 6px !important; 
+  
+  height: 200px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px -16px rgba(21, 20, 46, 0.08);
+  
+  /* แอนิเมชันเปิดตัวที่ลื่นไหลระดับสปริง */
+  transition: transform 0.5s var(--ease-spring), border-color 0.4s, box-shadow 0.5s var(--ease-out);
+  cursor: zoom-in;
+}
+
+/* เอฟเฟกต์ตอนเมาส์ชี้: การ์ดจะเรืองแสงนีออนซอฟต์สีม่วงแบรนด์ดิ้งลอยเด่นขึ้นมา */
+.cert-slide:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(91, 79, 227, 0.4);
+  box-shadow: 
+    0 24px 48px -20px rgba(84, 9, 218, 0.16),
+    0 0 0 1px rgba(91, 79, 227, 0.2);
+}
+
+/* ⚡ ครีเอทีฟพาร์ท ฝั่งซ้าย (กรอบรูปพรีวิว): จัดมุมมองภาพสไตล์ Isometric Device */
+.cert-image-frame {
+  width: 38%;
+  height: 100%;
+  background: var(--paper-dim);
+  overflow: hidden;
+  border-right: 1px solid rgba(21, 20, 46, 0.06);
+  display: grid;
+  place-items: center;
+  position: relative;
+  perspective: 600px; /* สร้างมิติความลึกเพื่อเอฟเฟกต์ 3D */
+}
+
+.cert-image-frame img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(21, 20, 46, 0.08);
+  
+  /* แอนิเมชันตั้งต้นเอียงมิติมุมมองเล็กน้อย */
+  transform: rotateY(12deg) rotateX(4deg);
+  transition: transform 0.6s var(--ease-spring), filter 0.3s;
+  filter: grayscale(15%) brightness(98%);
+}
+
+/* เมื่อเมาส์ชี้: ใบเซอร์จะพลิกตรง ลอยพุ่งออกมาหาผู้ใช้งาน (Interactive UI) */
+.cert-slide:hover .cert-image-frame img {
+  transform: rotateY(0deg) rotateX(0deg) scale(1.08) translateZ(10px);
+  filter: grayscale(0%) brightness(100%);
+}
+
+/* ฝั่งขวา (กล่องข้อมูล): คลีน สะอาด สไตล์มินิมอลเทค */
+.cert-info {
+  width: 62%;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* ปรับดีไซน์แท็กประเภทให้ดูโปร่งแสง ล้ำสมัย */
+.cert-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(78, 113, 255, 0.08);
+  color: var(--blue);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* ฟอนต์หัวข้อสไตล์แอปพลิเคชันรุ่นใหม่ */
+.cert-info h3 {
+  font-family: var(--font-body); /* สลัดความโบราณทิ้งด้วยฟอนต์ Sans-serif */
+  font-size: 1.1rem;
+  color: var(--ink);
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cert-info p {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* สัญลักษณ์บอกใบ้ให้คลิกดู แบบไม่รกสายตา */
+.cert-click-hint {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.6;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.cert-slide:hover .cert-click-hint {
+  opacity: 1;
+  color: var(--violet);
+}
+
+/* -------------------------------------------------------------------------
+   🖼️ LIGHTBOX MODAL (ป๊อปอัปพรีวิวสไตล์กระจกเงาลอยตัวระดับพรีเมียมรองรับ PDF)
+   ------------------------------------------------------------------------- */
+.cert-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(21, 20, 46, 0.75);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-out), visibility 0.4s;
+  cursor: zoom-out;
+}
+
+.cert-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  box-shadow: 0 45px 100px -30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* ⚡ ล็อกการ์ดให้ขยายกว้างเต็มประสิทธิภาพเพื่อให้เห็นเอกสาร PDF ได้ชัดเจน */
+  width: min(900px, 90vw) !important; 
+  
+  /* แอนิเมชันตอนเปิดรูปพุ่งแหวกอากาศออกมา (Scale In) */
+  transform: scale(0.92) translateZ(0);
+  transition: transform 0.5s var(--ease-spring);
+}
+
+.cert-lightbox.is-open .lightbox-content {
+  transform: scale(1) translateZ(0);
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 76vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 12px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 2.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+.lightbox-close:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 900px) {
+  .cert-grid-layout { grid-template-columns: 1fr; gap: 18px; }
+  .cert-slide { height: auto; min-height: 160px; }
+  .cert-image-frame img { transform: none !important; } /* ปิดเอฟเฟกต์ 3D บนมือถือ */
+}
+
+
+
+/* =========================================================================
+   CONTACT SECTION — FULL-BLEED STATEMENT CTA (ALL RELATED STYLES)
+   ========================================================================= */
+
+  /* =========================================================================
+   CONTACT SECTION — FINAL CLEAN & FIXED VARIATION (ชุดที่เคลียร์และแก้บั๊กแล้ว)
+   ========================================================================= */
+.contact-section { 
+  background: var(--ink); 
+  color: var(--paper); 
+  
+  /* ⚡ ล็อกความโค้งมนระดับใหญ่ให้ทำงานเด็ดขาด ไม่โดนคลาสอื่นทับค่า */
+  border-radius: var(--radius-md) !important; 
+  
+  margin: 0 32px; 
+  padding: 80px 60px; 
+  position: relative; 
+  overflow: hidden; /* บล็อกเนื้อหาด้านในไม่ให้ทะลุขอบมนออกมา */
+}
+
+/* เอฟเฟกต์สีเลเยอร์ไล่เฉดสีซอฟต์ทับด้านบนผิวกล่อง (Soft Gradient Overlay) */
+.contact-section::before { 
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  background: var(--grad-soft); 
+  opacity: 0.5; 
+  pointer-events: none; 
+  
+  /* ⚡ บังคับให้แผ่นเงาโค้งมนโค้งตามตัวกล่องหลักอย่างสมบูรณ์ ไม่ไปบังมุม */
+  border-radius: inherit; 
+}
+
+/* กล่องจัดเลเอาท์แบบ Grid แยกพื้นที่ภายในส่วนติดต่อเป็น 2 ฝั่ง */
+.contact-inner { 
+  position: relative; 
+  max-width: var(--container); 
+  margin: 0 auto; 
+  display: grid; 
+  grid-template-columns: 1.2fr 1fr; 
+  gap: 60px; 
+}
+
+/* การตั้งค่าและเปลี่ยนโทนสีตัวหนังสือเฉพาะพาร์ทในส่วนกล่องติดต่อ */
+.contact-section .section-eyebrow { 
+  color: var(--sky); 
+}
+.contact-section .section-eyebrow::before { 
+  background: var(--sky); 
+}
+.contact-section .section-title { 
+  color: var(--paper); 
+}
+.contact-section .section-sub { 
+  color: rgba(250,250,254,0.72); 
+}
+
+/* แผงรายการลิสต์จัดกลุ่มช่องทางข้อมูลติดต่อ (Email, Tel, Location, Status) */
+.contact-details { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 22px; 
+}
+
+/* การสร้างเส้นคั่นแบ่งสัดส่วนระหว่างข้อมูลแต่ละบรรทัด */
+.contact-details li { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 5px; 
+  border-top: 1px solid rgba(250,250,254,0.14); 
+  padding-top: 16px; 
+}
+.contact-details li:first-child { 
+  border-top: none; 
+  padding-top: 0; 
+}
+
+/* โครงสร้างตัวหนาหัวข้อจิ๋วประจำข้อมูลแต่ละช่อง */
+.contact-details strong { 
+  font-size: 11px; 
+  text-transform: uppercase; 
+  letter-spacing: 0.07em; 
+  color: rgba(250,250,254,0.5); 
+  font-family: var(--font-mono); 
+  font-weight: 500; 
+}
+
+/* รูปแบบตัวหนังสือและลิงก์ของข้อมูลหลักภายในรายการ */
+.contact-details a, 
+.contact-details span { 
+  font-size: 1.1rem; 
+  color: var(--paper); 
+}
+.contact-details a:hover { 
+  color: var(--sky); 
+}
+
+/* =========================================================================
+   MEDIA QUERIES (ส่วนควบคุม Responsive สำหรับระบบการจัดเรียงบนหน้าจอมือถือ)
+   ========================================================================= */
+@media (max-width: 760px) {
+  .contact-section { 
+    margin: 0 20px; 
+    padding: 52px 28px; 
+    
+    /* ⚡ บนจอมือถือ ปรับลดระดับความโค้งมนลงมาเป็นขนาดกลางให้รับกับความแคบของหน้าจอ */
+    border-radius: var(--r-md) !important; 
+  }
+  
+  .contact-inner { 
+    grid-template-columns: 1fr; /* ปรับการเรียงเป็น 1 คอลัมน์เต็มจอ */
+  }
+}
 /* ---------- footer ---------- */
-.site-footer{ border-top:1px solid var(--line); padding:80px 0 0; position:relative; }
-.footer-inner{ display:flex; justify-content:space-between; gap:60px; flex-wrap:wrap; }
-.footer-brand{ max-width:280px; display:flex; flex-direction:column; gap:16px; }
-.footer-brand p{ color:var(--ink-soft); font-size:.92rem; line-height:1.6; }
-.footer-links{ display:flex; gap:60px; }
-.footer-col{ display:flex; flex-direction:column; gap:12px; }
-.footer-col h3{ font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); font-family:var(--font-mono); font-weight:500; }
-.footer-col a{ color:var(--ink-soft); font-size:.9rem; transition:color .25s, transform .25s var(--ease-out); display:inline-block; }
-.footer-col a:hover{ color:var(--violet); transform:translateX(3px); }
-.footer-bottom{ margin-top:60px; padding:26px 32px; border-top:1px solid var(--line); text-align:center; font-size:.8rem; color:var(--ink-dim); font-family:var(--font-mono); }
+/* =========================================================================
+   SITE FOOTER — LIGHT PREMIUM SPECIFICATIONS
+   ========================================================================= */
+.site-footer { 
+  border-top: 1px solid var(--line); 
+  padding: 80px 0 0; 
+  position: relative; 
+  background: var(--paper-2); /* ใช้แบคกราวด์สีขาวนวลเพื่อแยกพื้นที่ให้ชัดเจน */
+}
+
+/* กล่องจัดเลเอาท์ด้านใน (จัดให้ฝั่งแบรนด์และฝั่งลิงก์แยกซ้าย-ขวา) */
+.footer-inner { 
+  max-width: var(--container); 
+  margin: 0 auto; 
+  padding: 0 32px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; /* จัดให้ข้อความอยู่ระนาบเดียวกันจากด้านบน */
+  gap: 60px; 
+  flex-wrap: wrap; 
+}
+
+
+
+/* แผงจัดกลุ่มคอลัมน์ลิงก์เมนู (Site และ Elsewhere) */
+.footer-links { 
+  display: flex; 
+  gap: 60px; 
+}
+
+/* โครงสร้างแต่ละคอลัมน์ */
+.footer-col { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+}
+
+/* หัวข้อคอลัมน์ (เช่น SITE, ELSEWHERE) สไตล์ตัวพิมพ์ใหญ่จิ๋วสากล */
+.footer-col h3 { 
+  font-size: .78rem; 
+  text-transform: uppercase; 
+  letter-spacing: .06em; 
+  color: var(--ink-dim); 
+  font-family: var(--font-mono); 
+  font-weight: 500; 
+}
+
+/* ลิงก์ภายในคอลัมน์ฟุตเตอร์ */
+.footer-col a { 
+  color: var(--ink-soft); 
+  font-size: .9rem; 
+  text-decoration: none;
+  transition: color .25s, transform .25s var(--ease-out); 
+  display: inline-block; 
+}
+
+/* เอฟเฟกต์แอนิเมชันเมื่อเมาส์ชี้ลิงก์ (ตัวหนังสือเปลี่ยนสีม่วง + ขยับเยื้องขวาเล็กน้อย) */
+.footer-col a:hover { 
+  color: var(--violet); 
+  transform: translateX(3px); 
+}
+
+/* แถบลิขสิทธิ์ด้านล่างสุด (Copyright Bottom Bar) */
+.footer-bottom { 
+  margin-top: 60px; 
+  padding: 26px 32px; 
+  border-top: 1px solid var(--line); 
+  text-align: center; 
+  font-size: .8rem; 
+  color: var(--ink-dim); 
+  font-family: var(--font-mono); 
+}
+
+/* =========================================================================
+   MEDIA QUERIES (ส่วนควบคุมระบบ Responsive สำหรับ Footer บนหน้าจอมือถือ)
+   ========================================================================= */
+@media (max-width: 760px) {
+  /* เมื่อเปิดบนจอมือถือ: ยุบตัวแบรนด์และลิงก์มาเรียงเป็นแถวดิ่งลงมาตรง ๆ */
+  .footer-inner { 
+    flex-direction: column; 
+    gap: 36px; 
+    padding: 0 20px; 
+  }
+  
+  /* ให้คอลัมน์ลิงก์ขยายกว้างเต็มจอและบาลานซ์ช่องไฟใหม่ */
+  .footer-links { 
+    gap: 40px; 
+    flex-wrap: wrap; 
+  }
+}
 
 @media (max-width:980px){
   .hero-inner{ grid-template-columns:1fr; }
@@ -588,11 +1661,7 @@ body {
       </div>
     </div>
 
-    <div class="hero-side reveal-up" style="--d:0.3s">
-      <span class="hero-side-tag">Tools in daily use — Figma, Power&nbsp;BI, RapidMiner, Excel</span>
-      <span class="hero-side-tag">Scroll to explore six sections of work &amp; learning</span>
-    </div>
-  </div>
+ 
 
   <a href="#about" class="scroll-cue" data-cursor="view" aria-label="Scroll to About">
     <span class="scroll-cue-line"></span>
@@ -600,7 +1669,6 @@ body {
   </a>
 </section>
 
-<div class="section-divider" aria-hidden="true"></div>
 
 <section class="section about" id="about">
   <div class="section-inner about-grid">
@@ -944,6 +2012,7 @@ body {
         <div class="tech-item"><img src="img1/images.jpeg"><span>Power BI</span></div>
         <div class="tech-item"><img src="img1/images.png"><span>HTML</span></div>
         <div class="tech-item"><img src="img1/images1.png"><span>CSS</span></div>
+        <div class="tech-item"><img src="img1/sql.png"><span>SQL</span></div>
     </div>
 
     <!-- 4 -->
@@ -973,8 +2042,6 @@ body {
 </section>
 
 
-<div class="section-divider" aria-hidden="true"></div>
-
 <section class="section certificates" id="certificates">
   <div class="section-inner">
     <div class="section-heading">
@@ -983,95 +2050,139 @@ body {
       <p class="section-sub reveal-up">Courses and professional training that support my academic learning and practical skills.</p>
     </div>
 
-    <div class="cert-carousel-container reveal-up">
-      <div class="cert-carousel-track">
-        <div class="cert-slide">
-          <div class="cert-image-frame"><embed src="img1/Certificate-MS02-TH.pdf" type="application/pdf"></div>
-          <div class="cert-info">
-            <span class="cert-badge">Data Visualization</span>
-            <h3>Microsoft Power BI Training</h3>
-            <p>Data Visualization &amp; Business Intelligence<br>Microsoft Power BI (3 Hours)<br>Professional Qualification Institute &bull; 2025</p>
-            <a href="img1/Certificate-MS02-TH.pdf" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-
-        <div class="cert-slide">
-          <div class="cert-image-frame"><embed src="img1/Certificate-kumooc046-TH.pdf" type="application/pdf"></div>
-          <div class="cert-info">
-            <span class="cert-badge">Research &amp; AI</span>
-            <h3>Generative AI &amp; ChatGPT for Research</h3>
-            <p>KUMOOC &bull; 2025</p>
-            <a href="img1/Certificate-kumooc046-TH.pdf" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-
-        <div class="cert-slide">
-          <div class="cert-image-frame"><embed src="img1/IntrotoDataScience.pdf" type="application/pdf"></div>
-          <div class="cert-info">
-            <span class="cert-badge">Data Analytics Fundamentals</span>
-            <h3>Introduction to Data Science</h3>
-            <p>Cisco Networking Academy &bull; 2023</p>
-            <a href="img1/IntrotoDataScience.pdf" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-
-        <div class="cert-slide">
-          <div class="cert-image-frame"><embed src="img1/66010916068.pdf" type="application/pdf"></div>
-          <div class="cert-info">
-            <span class="cert-badge">Web Design &amp; Development</span>
-            <h3>Mobile-Friendly Website Development</h3>
-            <p>Thai MOOC &bull; RMUTI &bull; 2025</p>
-            <a href="img1/66010916068.pdf" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-      </div>
+    <div class="cert-grid-layout">
+  
+  <!-- ใบรับรองที่ 1: Power BI -->
+   <article class="cert-slide has-cursor" data-cert-src="img1/Certificate-MS02-TH.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <!-- รูปภาพพรีวิวสำหรับโชว์มิติ 3D พลิกตรงบนหน้าการ์ด -->
+      <img src="img1/Certificate-MS02-TH.png" alt="Microsoft Power BI Training" loading="lazy">
     </div>
-
-    <div class="section-heading" style="margin-top:60px;">
-      <h2 class="section-title reveal-up">Academic qualifications</h2>
-      <p class="section-sub reveal-up">University exit assessments demonstrating English and digital competency.</p>
+    <div class="cert-info">
+      <span class="cert-badge">Data Visualization</span>
+      <h3>Microsoft Power BI Training</h3>
+      <p>Data Visualization &amp; Business Intelligence<br>Microsoft Power BI (3 Hours)<br>Professional Qualification Institute &bull; 2025</p>
+      <div class="cert-click-hint">View Document 🔍</div>
     </div>
+  </article>
 
-    <div class="cert-carousel-container reveal-up">
-      <div class="cert-carousel-track">
-        <div class="cert-slide">
-          <div class="cert-image-frame"><img src="img1/certificate.png" alt="English Exit Examination MSU"></div>
-          <div class="cert-info">
-            <span class="cert-badge">English Exit Exam MSU</span>
-            <h3>English Exit Examination</h3>
-            <p>CEFR B2 (Overall Score: 67)<br>Mahasarakham University &bull; February 2026</p>
-            <a href="img1/certificate.png" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-
-        <div class="cert-slide">
-          <div class="cert-image-frame"><embed src="img1/Digital_Literacy_Exit_Exam-42142-66010916068.pdf" type="application/pdf"></div>
-          <div class="cert-info">
-            <span class="cert-badge">Digital Literacy Exam MSU</span>
-            <h3>Digital Literacy Exit Examination</h3>
-            <p>Score: 56.67 (Moderate)<br>Mahasarakham University &bull; July 2026</p>
-            <a href="img1/Digital_Literacy_Exit_Exam-42142-66010916068.pdf" target="_blank" rel="noopener" class="cert-link-btn" data-cursor="view">Verify credential ↗</a>
-          </div>
-        </div>
-      </div>
+  <!-- ใบรับรองที่ 2: Generative AI -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/Certificate-kumooc046-TH.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <img src="img1/Certificate-kumooc046-TH.png" alt="Generative AI & ChatGPT for Research" loading="lazy">
     </div>
+    <div class="cert-info">
+      <span class="cert-badge">Research &amp; AI</span>
+      <h3>Generative AI &amp; ChatGPT for Research</h3>
+      <p>KUMOOC &bull; 2025</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+  <!-- ใบรับรองที่ 3: Data Science -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/IntrotoDataScience.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <img src="img1/IntrotoDataScience.png" alt="Introduction to Data Science" loading="lazy">
+    </div>
+    <div class="cert-info">
+      <span class="cert-badge">Data Analytics Fundamentals</span>
+      <h3>Introduction to Data Science</h3>
+      <p>Cisco Networking Academy &bull; 2023</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+  <!-- ใบรับรองที่ 4: Mobile Web Development -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/66010916068.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <img src="img1/66010916068.png" alt="Mobile-Friendly Website Development" loading="lazy">
+    </div>
+    <div class="cert-info">
+      <span class="cert-badge">Web Design &amp; Development</span>
+      <h3>Mobile-Friendly Website Development</h3>
+      <p>Thai MOOC &bull; RMUTI &bull; 2025</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+
+   <!-- ⚡ ใบรับรองที่เพิ่มใหม่: Gemini Certified Educator -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/Gemini-Certified-Educator.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <!-- รูปพรีวิวหน้าการ์ดนิ่ง สำหรับทำเอฟเฟกต์ 3D Isometric (แนะนำแคปหน้าระบบเป็นไฟล์รูปภาพไว้ครับ) -->
+      <img src="img1/Gemini-Certified-Educator.png" alt="Gemini Certified Educator" loading="lazy">
+    </div>
+    <div class="cert-info">
+      <span class="cert-badge">Google AI &amp; Education</span>
+      <h3>Gemini Certified Educator</h3>
+      <p>Google for Education<br>Issued: 12/02/2026 &bull; Valid thru: 2029</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+</div>
+
+<!-- หัวข้อวุฒิบัตรการทดสอบระดับมหาวิทยาลัย -->
+<div class="section-heading" style="margin-top:70px;">
+  <h2 class="section-title reveal-up">Academic qualifications</h2>
+  <p class="section-sub reveal-up">University exit assessments demonstrating English and digital competency.</p>
+</div>
+
+<div class="cert-grid-layout">
+  
+  <!-- ใบรับรองที่ 5: English Exit Exam -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/certificate.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <img src="img1/certificate.png" alt="English Exit Examination MSU" loading="lazy">
+    </div>
+    <div class="cert-info">
+      <span class="cert-badge">English Exit Exam MSU</span>
+      <h3>English Exit Examination</h3>
+      <p>CEFR B2 (Overall Score: 67)<br>Mahasarakham University &bull; February 2026</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+  <!-- ใบรับรองที่ 6: Digital Literacy -->
+  <article class="cert-slide has-cursor" data-cert-src="img1/Digital_Literacy_Exit_Exam-42142-66010916068.png" data-cursor-label="Zoom">
+    <div class="cert-image-frame">
+      <img src="img1/Digital_Literacy_Exit_Exam-42142-66010916068.png" alt="Digital Literacy Exit Examination" loading="lazy">
+    </div>
+    <div class="cert-info">
+      <span class="cert-badge">Digital Literacy Exam MSU</span>
+      <h3>Digital Literacy Exit Examination</h3>
+      <p>Score: 56.67 (Moderate)<br>Mahasarakham University &bull; July 2026</p>
+      <div class="cert-click-hint">View Document 🔍</div>
+    </div>
+  </article>
+
+</div>
+
+<!-- ⚡ โครงสร้างกล่องพรีวิวรูปภาพ Lightbox (วางไว้ล่างสุดของหน้า ก่อนแท็ก </body>) -->
+<div id="certLightbox" class="cert-lightbox" aria-hidden="true">
+  <button class="lightbox-close" aria-label="Close preview">✕</button>
+  <div class="lightbox-content">
+    <img id="lightboxTargetImg" src="" alt="Certificate Large Preview">
   </div>
-</section>
+</div>
 
 <div class="section-divider" aria-hidden="true"></div>
 
-<section class="section contact" id="contact">
-  <div class="section-inner contact-grid">
-    <div class="contact-copy">
-      <span class="section-eyebrow reveal-up">Contact</span>
-      <h2 class="section-title reveal-up">Nice to meet you!</h2>
-      <p class="section-sub reveal-up">Thank you for taking the time to visit my portfolio. If you're interested in my work or have an internship opportunity that matches my background, I'd be happy to hear from you.
+<section class="section contact" id="contact" style="padding-bottom:60px;">
+  <div class="contact-section reveal-up">
+    <div class="contact-inner">
+      <div>
+        <span class="section-eyebrow">Contact</span>
+        <h2 class="section-title">Nice to meet you!</h2>
+        <p class="section-sub">Thank you for taking the time to visit my portfolio. If you're interested in my work or have an internship opportunity that matches my background, I'd be happy to hear from you.
 
 I'm eager to learn, open to new experiences, and always happy to exchange ideas. I look forward to connecting with you!</p>
 
-      <ul class="contact-details reveal-up">
-        <li><strong>Email</strong><a href="mailto:natsupha.yo@gmail.com" data-cursor="talk">natsupha.yo@email.com</a></li>
-        <li><strong>Tel.</strong><span>0659106769</span></li>
+      </div>
+
+      <ul class="contact-details">
+        <li><strong>Email</strong><a class="has-cursor" data-cursor-label="Email" href="mailto:natsupha.yo@gmail.com">natsupha.yo@gmail.com</a></li>
+        <li><strong>Tel.</strong><span>065 910 6769</span></li>
         <li><strong>Location</strong><span>มหาสารคาม ประเทศไทย</span></li>
         <li><strong>Status</strong><span>Looking for internship opportunities</span></li>
       </ul>
@@ -1081,32 +2192,49 @@ I'm eager to learn, open to new experiences, and always happy to exchange ideas.
 
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="brand-mark">NY</span>
-      <p>Digital Business Information Systems student blending UX thinking with data-driven business analysis.</p>
+<!-- =========================================================================
+   ⚡ UPGRADED FOOTER: TECH & STATUS PORTAL (เพิ่มความน่าสนใจแบบคลีนเทค)
+   ========================================================================= -->
+<footer class="site-footer" style="padding: 60px 0 30px; border-top: 1px solid rgba(21, 20, 46, 0.05);">
+  <div class="footer-inner" style="max-width: var(--container); margin: 0 auto; padding: 0 32px; display: flex; flex-direction: column; gap: 32px;">
+    
+    <!-- แผงข้อมูลชั้นบน: แบรนด์ดิ้ง + สถานะระบบแบบครีเอทีฟ -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px;">
+      
+      <!-- ฝั่งซ้าย: โลโก้ชื่อเดิม -->
+      <div class="footer-brand" style="display: flex; align-items: center; gap: 10px;">
+        <span class="brand-mark" style="font-family: var(--font-mono); font-weight: bold; background: rgba(84, 9, 218, 0.08); color: var(--violet); padding: 4px 8px; border-radius: 6px; font-size: 13px;">NY</span>
+        <span style="font-weight: 600; letter-spacing: -0.01em;">Natsupha Yothakun</span>
+      </div>
+
+      <!-- ⚡ เพิ่มตรงกลาง: ป้ายสถานะระบบแบบ Real-time (บ่งบอกสาย Tech/Data) -->
+      <div style="display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; background: rgba(78, 113, 255, 0.06); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(78, 113, 255, 0.1);">
+        <!-- จุดไฟกะพริบสีเขียวเรืองแสงบ่งบอกสถานะ Active -->
+        <span style="width: 6px; height: 6px; background: #10B981; border-radius: 50%; display: inline-block; box-shadow: 0 0 8px #10B981;"></span>
+        <span style="color: var(--ink-soft);">STATUS: AVAILABLE FOR INTERNSHIP</span>
+      </div>
+
+      <!-- ฝั่งขวา: โซเชียลมีเดียที่มี (GitHub) -->
+      <div class="footer-links" style="display: flex; gap: 20px;">
+        <a href="https://github.com/natsupha-yothakun" target="_blank" rel="noopener" class="has-cursor" style="color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; transition: color 0.3s;" onmouseover="this.style.color='var(--violet)'" onmouseout="this.style.color='var(--ink-soft)'">GitHub</a>
+      </div>
+
     </div>
 
-    <div class="footer-links">
-      <div class="footer-col">
-        <h3>Site</h3>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="footer-col">
-        <h3>Elsewhere</h3>
-        <a href="https://github.com/example" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/example" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="assets/resume.pdf" target="_blank" rel="noopener">Résumé</a>
-      </div>
+    <!-- ⚡ เพิ่มชั้นกลาง: สรุปความเชี่ยวชาญสไตล์ Dashboard Footer (เรียบแต่โก้) -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; border-top: 1px dashed rgba(21, 20, 46, 0.08); padding-top: 20px;">
+      <span>Focus Areas: Data Analytics</span>
+      <span style="color: rgba(21, 20, 46, 0.2);">&bull;</span>
+      <span>Business Intelligence</span>
+      <span style="color: rgba(21, 20, 46, 0.2);">&bull;</span>
+      <span>UX/UI Decision Design</span>
     </div>
+
   </div>
 
+  <!-- แผงลิขสิทธิ์ด้านล่างสุด -->
   <div class="footer-bottom">
-    <span>© <span id="year"></span> Natsupha Yothakun</span>
+    © <span id="year"></span> Natsupha Yothakun · Built with HTML, CSS & JavaScript
   </div>
 </footer>
 
@@ -1548,7 +2676,92 @@ I'm eager to learn, open to new experiences, and always happy to exchange ideas.
   });
 
 })();
+
+/* =========================================================================
+   🖼️ EDITORIAL LIGHTBOX CONTROLLER (ระบบเด้งขยายใบเซอร์บนหน้าจอ)
+   ========================================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const lightbox = document.getElementById('certLightbox');
+  const lightboxImg = document.getElementById('lightboxTargetImg');
+  const closeBtn = lightbox?.querySelector('.lightbox-close');
+
+  // ผูกฟังก์ชันการคลิกขยายเข้ากับตัวการ์ดทุกใบ
+  document.querySelectorAll('.cert-slide').forEach(card => {
+    card.addEventListener('click', () => {
+      const imgSrc = card.getAttribute('data-cert-src');
+      if (imgSrc && lightbox && lightboxImg) {
+        lightboxImg.src = imgSrc;
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  // ฟังก์ชันสไลด์ปิดหน้าต่างพรีวิว
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      // รอให้แอนิเมชันจางหายเสร็จสิ้นแล้วเคลียร์ลิงก์รูปภาพทิ้ง
+      setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 400); 
+    }
+  }
+
+  // ปิดด้วยคลิกปุ่มกากบาท หรือกดพื้นที่มืดรอบ ๆ ตัวภาพ
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      closeLightbox();
+    }
+  });
+
+  // บล็อกการกดปุ่มคีย์บอร์ด ESC เพื่อปิดหน้าต่างแบบสากล
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+});
 </script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
